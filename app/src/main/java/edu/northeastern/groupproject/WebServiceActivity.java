@@ -5,11 +5,13 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -25,7 +27,7 @@ public class WebServiceActivity extends AppCompatActivity {
     private boolean noNsfw, noReligious, noPolitical, noRacist;
     private Handler handler = new Handler();
     CounterThread counterThread;
-    String result = "";
+    ArrayList<Joke> jokes;
     String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
 
     @SuppressLint("MissingInflatedId")
@@ -40,6 +42,11 @@ public class WebServiceActivity extends AppCompatActivity {
         cbPolitical = findViewById(R.id.checkbox3);
         cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
+        if(savedInstanceState!=null){
+            jokes=savedInstanceState.getParcelableArrayList("jokes");
+        }else{
+            jokes=new ArrayList<Joke>();
+        }
         cbNsfw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +81,11 @@ public class WebServiceActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("jokes", (ArrayList<? extends Parcelable>) jokes);
+    }
     class JsonRunnable implements Runnable{
         @Override
         public void run() {
@@ -88,14 +99,14 @@ public class WebServiceActivity extends AppCompatActivity {
                 conn.connect();
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
-                result = jsonObject.get("joke").toString();
+                parseInputToJokes(jsonObject);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    textView.setText(result);
+                    // TODO: put ArrayList<Joke> into Recycler View
                     counterThread.interrupt();
                 }
             });
@@ -104,6 +115,19 @@ public class WebServiceActivity extends AppCompatActivity {
         private String inputStreamToString(InputStream is) {
             Scanner s = new Scanner(is).useDelimiter("\\A");
             return s.hasNext() ? s.next().replace(",", ",\n") : "";
+        }
+    }
+    private void parseInputToJokes(JSONObject jsonObject) throws JSONException {
+        // example output: https://v2.jokeapi.dev/joke/Any?type=twopart&amount=5&blacklistFlags=
+        // TODO: this method was NOT tested due to no recycler view. Please test it out.
+        JSONArray jsonArray=jsonObject.getJSONArray("jokes");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject joke = jsonArray.getJSONObject(i);
+            String category=joke.get("category").toString();
+            String setup=joke.get("setup").toString();
+            String delivery=joke.get("delivery").toString();
+            Joke newjoke=new Joke(category,setup,delivery);
+            jokes.add(newjoke);
         }
     }
 
