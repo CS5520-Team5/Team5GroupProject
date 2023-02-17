@@ -76,8 +76,7 @@
         <RelativeLayout
             app:layout_constraintTop_toBottomOf="@+id/checkbox1"
             android:layout_height="match_parent"
-            android:layout_width="match_parent" >
-
+            android:layout_width="match_parent">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +85,6 @@
                 android:textColor="@color/white"
                 android:textSize="21dp" />
         </RelativeLayout>
-
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -112,19 +110,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/testText" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left"
-        app:constraint_referenced_ids="selectFlagInfo" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
