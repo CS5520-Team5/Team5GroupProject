@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -17,12 +18,15 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
-
     private CardView cardView;
     private TextView textView;
     private TextView responseTimeText;
+    private CheckBox cbNsfw, cbReligious, cbPolitical, cbRacist;
+    private boolean noNsfw, noReligious, noPolitical, noRacist;
     private Handler handler = new Handler();
     CounterThread counterThread;
+    String result = new String();
+    String basicURL = "https://v2.jokeapi.dev/joke/Any";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -31,8 +35,35 @@ public class WebServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_service);
         cardView = findViewById(R.id.cardGenerateJoke);
         textView = findViewById(R.id.testText);
+        cbNsfw = findViewById(R.id.checkbox1);
+        cbReligious = findViewById(R.id.checkbox2);
+        cbPolitical = findViewById(R.id.checkbox3);
+        cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
-
+        cbNsfw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noNsfw = true;
+            }
+        });
+        cbReligious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noReligious = true;
+            }
+        });
+        cbPolitical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noPolitical = true;
+            }
+        });
+        cbRacist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noRacist = true;
+            }
+        });
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,32 +77,26 @@ public class WebServiceActivity extends AppCompatActivity {
 
 
     class JsonRunnable implements Runnable{
-        StringBuilder sb = new StringBuilder();
         @Override
         public void run() {
             URL url;
-            String ndcURL = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=814380&count=3&maxlength=1000&format=json";
-
             try {
-                url = new URL(ndcURL);
+                addBlacklistToURL();
+                url = new URL(basicURL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
-                JSONArray jsonArray = jsonObject.getJSONObject("appnews").getJSONArray("newsitems");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject obj = jsonArray.getJSONObject(i);
-                    sb.append( i + 1 + "\t" + obj.getString("title") + "\n\n\n");
-                }
+                result = jsonObject.get("joke").toString();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    textView.setText(sb.toString());
+                    textView.setText(result);
                     counterThread.interrupt();
                 }
             });
@@ -81,6 +106,33 @@ public class WebServiceActivity extends AppCompatActivity {
             Scanner s = new Scanner(is).useDelimiter("\\A");
             return s.hasNext() ? s.next().replace(",", ",\n") : "";
         }
+    }
+
+    private void addBlacklistToURL() {
+        if (noNsfw || noPolitical || noRacist || noReligious) {
+            basicURL += "?blacklistFlags=";
+        } else {
+            basicURL += "?type=single";
+            return;
+        }
+
+        if (noNsfw) {
+            basicURL += "nsfw";
+        }
+        if (noReligious) {
+            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
+            basicURL += "religious";
+        }
+        if (noPolitical) {
+            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
+            basicURL += "political";
+        }
+        if (noRacist) {
+            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
+            basicURL += "racist";
+        }
+
+        basicURL += "&type=single";
     }
 
     // Inner class to display a counter for API response time
