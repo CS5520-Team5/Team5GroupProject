@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,9 +24,10 @@ import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
     private CardView cardView;
-    private TextView textView, responseTimeText;
+    private TextView responseTimeText;
     private CheckBox cbNsfw, cbReligious, cbPolitical, cbRacist;
     private boolean noNsfw, noReligious, noPolitical, noRacist;
+    private FloatingActionButton fab;
     private Handler handler = new Handler();
     CounterThread counterThread;
     ArrayList<Joke> jokes;
@@ -36,12 +39,12 @@ public class WebServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_service);
         cardView = findViewById(R.id.cardGenerateJoke);
-        textView = findViewById(R.id.testText);
         cbNsfw = findViewById(R.id.checkbox1);
         cbReligious = findViewById(R.id.checkbox2);
         cbPolitical = findViewById(R.id.checkbox3);
         cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
+        fab=findViewById(R.id.fab_back);
         if(savedInstanceState!=null){
             jokes=savedInstanceState.getParcelableArrayList("jokes");
         }else{
@@ -78,6 +81,13 @@ public class WebServiceActivity extends AppCompatActivity {
                 new Thread(jsonRunnable).start();
                 counterThread = new CounterThread();
                 counterThread.start();
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                finish();
             }
         });
     }
