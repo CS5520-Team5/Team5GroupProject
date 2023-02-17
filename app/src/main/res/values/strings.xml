@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GroupProject</string>
+    <string name="optional_select_flags_to_blacklist">(Optional) Select flags to blacklist:</string>
+    <string name="nsfw">nsfw</string>
+    <string name="religious">religious</string>
+    <string name="political">political</string>
+    <string name="racist">racist</string>
 </resources>

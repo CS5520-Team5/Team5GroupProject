@@ -19,13 +19,12 @@ import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
     private CardView cardView;
-    private TextView textView;
-    private TextView responseTimeText;
+    private TextView textView, responseTimeText;
     private CheckBox cbNsfw, cbReligious, cbPolitical, cbRacist;
     private boolean noNsfw, noReligious, noPolitical, noRacist;
     private Handler handler = new Handler();
     CounterThread counterThread;
-    String result = new String();
+    String result = "";
     String basicURL = "https://v2.jokeapi.dev/joke/Any";
 
     @SuppressLint("MissingInflatedId")
@@ -43,25 +42,25 @@ public class WebServiceActivity extends AppCompatActivity {
         cbNsfw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noNsfw = true;
+                noNsfw = !noNsfw;
             }
         });
         cbReligious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noReligious = true;
+                noReligious = !noReligious;
             }
         });
         cbPolitical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noPolitical = true;
+                noPolitical = !noPolitical;
             }
         });
         cbRacist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noRacist = true;
+                noRacist = !noRacist;
             }
         });
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,6 @@ public class WebServiceActivity extends AppCompatActivity {
             }
         });
     }
-
 
     class JsonRunnable implements Runnable{
         @Override
@@ -137,9 +135,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
     // Inner class to display a counter for API response time
     class CounterThread extends Thread {
-
         private int n = 0;
-
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted() && n < Integer.MAX_VALUE) {
