@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class WebServiceActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     CounterThread counterThread;
     String result = "";
-    String basicURL = "https://v2.jokeapi.dev/joke/Any";
+    String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -107,30 +108,18 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     private void addBlacklistToURL() {
-        if (noNsfw || noPolitical || noRacist || noReligious) {
-            basicURL += "?blacklistFlags=";
-        } else {
-            basicURL += "?type=single";
-            return;
+        ArrayList<String> blacklistFlags=new ArrayList<>();
+        if(noNsfw){
+            blacklistFlags.add("nsfw");
+        }else if(noReligious){
+            blacklistFlags.add("religious");
+        }else if(noPolitical){
+            blacklistFlags.add("political");
+        }else if(noRacist){
+            blacklistFlags.add("racist");
         }
-
-        if (noNsfw) {
-            basicURL += "nsfw";
-        }
-        if (noReligious) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "religious";
-        }
-        if (noPolitical) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "political";
-        }
-        if (noRacist) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "racist";
-        }
-
-        basicURL += "&type=single";
+        String blacklistStr=String.join(",",blacklistFlags);
+        basicURL+="&&blacklistFlags="+blacklistStr;
     }
 
     // Inner class to display a counter for API response time
