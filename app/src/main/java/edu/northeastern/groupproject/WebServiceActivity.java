@@ -29,7 +29,7 @@ public class WebServiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_service);
-        cardView = findViewById(R.id.cardSekiro);
+        cardView = findViewById(R.id.cardGenerateJoke);
         textView = findViewById(R.id.testText);
         responseTimeText = findViewById(R.id.responseTimeText);
 
