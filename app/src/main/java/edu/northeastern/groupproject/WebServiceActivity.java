@@ -5,16 +5,19 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
@@ -24,8 +27,8 @@ public class WebServiceActivity extends AppCompatActivity {
     private boolean noNsfw, noReligious, noPolitical, noRacist;
     private Handler handler = new Handler();
     CounterThread counterThread;
-    String result = "";
-    String basicURL = "https://v2.jokeapi.dev/joke/Any";
+    ArrayList<Joke> jokes;
+    String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,6 +42,11 @@ public class WebServiceActivity extends AppCompatActivity {
         cbPolitical = findViewById(R.id.checkbox3);
         cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
+        if(savedInstanceState!=null){
+            jokes=savedInstanceState.getParcelableArrayList("jokes");
+        }else{
+            jokes=new ArrayList<Joke>();
+        }
         cbNsfw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +81,11 @@ public class WebServiceActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("jokes", (ArrayList<? extends Parcelable>) jokes);
+    }
     class JsonRunnable implements Runnable{
         @Override
         public void run() {
@@ -87,14 +99,14 @@ public class WebServiceActivity extends AppCompatActivity {
                 conn.connect();
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
-                result = jsonObject.get("joke").toString();
+                parseInputToJokes(jsonObject);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    textView.setText(result);
+                    // TODO: put ArrayList<Joke> into Recycler View
                     counterThread.interrupt();
                 }
             });
@@ -105,32 +117,33 @@ public class WebServiceActivity extends AppCompatActivity {
             return s.hasNext() ? s.next().replace(",", ",\n") : "";
         }
     }
+    private void parseInputToJokes(JSONObject jsonObject) throws JSONException {
+        // example output: https://v2.jokeapi.dev/joke/Any?type=twopart&amount=5&blacklistFlags=
+        // TODO: this method was NOT tested due to no recycler view. Please test it out.
+        JSONArray jsonArray=jsonObject.getJSONArray("jokes");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject joke = jsonArray.getJSONObject(i);
+            String category=joke.get("category").toString();
+            String setup=joke.get("setup").toString();
+            String delivery=joke.get("delivery").toString();
+            Joke newjoke=new Joke(category,setup,delivery);
+            jokes.add(newjoke);
+        }
+    }
 
     private void addBlacklistToURL() {
-        if (noNsfw || noPolitical || noRacist || noReligious) {
-            basicURL += "?blacklistFlags=";
-        } else {
-            basicURL += "?type=single";
-            return;
+        ArrayList<String> blacklistFlags=new ArrayList<>();
+        if(noNsfw){
+            blacklistFlags.add("nsfw");
+        }else if(noReligious){
+            blacklistFlags.add("religious");
+        }else if(noPolitical){
+            blacklistFlags.add("political");
+        }else if(noRacist){
+            blacklistFlags.add("racist");
         }
-
-        if (noNsfw) {
-            basicURL += "nsfw";
-        }
-        if (noReligious) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "religious";
-        }
-        if (noPolitical) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "political";
-        }
-        if (noRacist) {
-            basicURL += (basicURL.charAt(basicURL.length() - 1) == '=' ? "" : ",");
-            basicURL += "racist";
-        }
-
-        basicURL += "&type=single";
+        String blacklistStr=String.join(",",blacklistFlags);
+        basicURL+="&&blacklistFlags="+blacklistStr;
     }
 
     // Inner class to display a counter for API response time
