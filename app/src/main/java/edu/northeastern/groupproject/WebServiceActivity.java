@@ -32,8 +32,8 @@ public class WebServiceActivity extends AppCompatActivity {
     private boolean noNsfw, noReligious, noPolitical, noRacist;
     private FloatingActionButton fab;
     private Handler handler = new Handler();
-    private RecyclerView recyclerView;
-    private RecyclerAdapter recyclerAdapter;
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
     CounterThread counterThread;
     ArrayList<Joke> jokes;
     String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
@@ -121,6 +121,10 @@ public class WebServiceActivity extends AppCompatActivity {
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
                 parseInputToJokes(jsonObject);
+                System.out.println(basicURL);
+                System.out.println(jokes.get(0).toString());
+                System.out.println(recyclerAdapter.getItemCount()); // 10
+//                System.out.println(recyclerAdapter.);
             } catch (Exception e) {
                 e.printStackTrace();
             }
