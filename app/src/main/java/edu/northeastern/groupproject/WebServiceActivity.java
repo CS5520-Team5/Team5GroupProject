@@ -2,6 +2,9 @@ package edu.northeastern.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +32,8 @@ public class WebServiceActivity extends AppCompatActivity {
     private boolean noNsfw, noReligious, noPolitical, noRacist;
     private FloatingActionButton fab;
     private Handler handler = new Handler();
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
     CounterThread counterThread;
     ArrayList<Joke> jokes;
     String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
@@ -45,11 +50,17 @@ public class WebServiceActivity extends AppCompatActivity {
         cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
         fab=findViewById(R.id.fab_back);
+
         if(savedInstanceState!=null){
             jokes=savedInstanceState.getParcelableArrayList("jokes");
         }else{
             jokes=new ArrayList<Joke>();
         }
+        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapter=new RecyclerAdapter(jokes,this);
+        recyclerView.setAdapter(recyclerAdapter);
+
         cbNsfw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +127,6 @@ public class WebServiceActivity extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    // TODO: put ArrayList<Joke> into Recycler View
                     counterThread.interrupt();
                 }
             });
@@ -129,7 +139,6 @@ public class WebServiceActivity extends AppCompatActivity {
     }
     private void parseInputToJokes(JSONObject jsonObject) throws JSONException {
         // example output: https://v2.jokeapi.dev/joke/Any?type=twopart&amount=5&blacklistFlags=
-        // TODO: this method was NOT tested due to no recycler view. Please test it out.
         JSONArray jsonArray=jsonObject.getJSONArray("jokes");
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject joke = jsonArray.getJSONObject(i);

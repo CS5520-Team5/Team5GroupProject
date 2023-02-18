@@ -67,4 +67,13 @@ public class Joke implements Parcelable {
             return new Joke[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Joke{" +
+                "category='" + category + '\'' +
+                ", setup='" + setup + '\'' +
+                ", delivery='" + delivery + '\'' +
+                '}';
+    }
 }
