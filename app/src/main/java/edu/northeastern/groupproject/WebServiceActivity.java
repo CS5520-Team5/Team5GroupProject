@@ -56,10 +56,6 @@ public class WebServiceActivity extends AppCompatActivity {
         }else{
             jokes=new ArrayList<Joke>();
         }
-        recyclerView=findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter=new RecyclerAdapter(jokes,this);
-        recyclerView.setAdapter(recyclerAdapter);
 
         cbNsfw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +97,14 @@ public class WebServiceActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerAdapter=new RecyclerAdapter(jokes,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recyclerAdapter);
     }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -151,6 +154,7 @@ public class WebServiceActivity extends AppCompatActivity {
             String delivery=joke.get("delivery").toString();
             Joke newjoke=new Joke(category,setup,delivery);
             jokes.add(newjoke);
+            recyclerAdapter.notifyDataSetChanged();
         }
     }
 

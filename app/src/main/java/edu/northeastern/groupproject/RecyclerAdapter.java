@@ -35,16 +35,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         switch (category){
             case "Programming":
                 holder.image_category.setImageResource(R.drawable.programming);
+                break;
             case "Misc":
                 holder.image_category.setImageResource(R.drawable.misc);
+                break;
             case "Dark":
                 holder.image_category.setImageResource(R.drawable.dark);
+                break;
             case "Pun":
                 holder.image_category.setImageResource(R.drawable.pun);
+                break;
             case "Spooky":
                 holder.image_category.setImageResource(R.drawable.spooky);
+                break;
             case "Christmas":
                 holder.image_category.setImageResource(R.drawable.christmas);
+                break;
         }
 
     }
