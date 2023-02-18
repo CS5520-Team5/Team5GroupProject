@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
-    private ArrayList<Response> responseList;
+    private ArrayList<Joke> jokeList;
 
     public recyclerAdapter(ArrayList<Response> responseList){
-        this.responseList = responseList;
+        this.jokeList = jokeList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -38,13 +38,13 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        String name = responseList.get(position).getPic();
+        String name = jokeList.get(position).getCategory();
         holder.picText.setText(name);
 
     }
 
     @Override
     public int getItemCount() {
-        return responseList.size();
+        return jokeList.size();
     }
 }
