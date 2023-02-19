@@ -115,6 +115,7 @@ public class WebServiceActivity extends AppCompatActivity {
         public void run() {
             URL url;
             try {
+                jokes=new ArrayList<Joke>();
                 addBlacklistToURL();
                 url = new URL(basicURL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -124,10 +125,7 @@ public class WebServiceActivity extends AppCompatActivity {
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
                 parseInputToJokes(jsonObject);
-                System.out.println(basicURL);
-                System.out.println(jokes.get(0).toString());
-                System.out.println(recyclerAdapter.getItemCount()); // 10
-//                System.out.println(recyclerAdapter.);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
