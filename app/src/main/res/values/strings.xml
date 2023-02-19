@@ -14,4 +14,7 @@
     <string name="generateString">Generate Jokes</string>
     <string name="responseTimeString">Waiting time: -</string>
 <!--    Strings in IndividualActivity-->
+    <string name="categoryString">Category</string>
+    <string name="setupString">Setup</string>
+    <string name="deliveryString">Delivery</string>
 </resources>
