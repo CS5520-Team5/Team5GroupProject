@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    IDs in MainActivity-->
+    <item name="introText" type="id" />
+    <item name="btnWebService" type="id" />
+    <item name="btnPlaceholder1" type="id" />
+    <item name="btnPlaceholder2" type="id" />
+<!--    IDs in WebServiceActivity-->
+    <item name="selectFlagInfo" type="id" />
+    <item name="checkbox1" type="id" />
+    <item name="checkbox2" type="id" />
+    <item name="checkbox3" type="id" />
+    <item name="checkbox4" type="id" />
+    <item name="recyclerView" type="id" />
+    <item name="responseTimeText" type="id" />
+    <item name="generateButton" type="id" />
+<!--    IDs in IndividualActivity-->
+    <item name="image_category" type="id" />
+    <item name="text_category" type="id" />
+    <item name="text_setup" type="id" />
+    <item name="text_delivery" type="id" />
+
+</resources>

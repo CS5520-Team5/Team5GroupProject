@@ -8,7 +8,7 @@
     tools:context=".WebServiceActivity">
 
     <TextView
-        android:id="@+id/selectFlagInfo"
+        android:id="@id/selectFlagInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -20,58 +20,57 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkbox1"
+        android:id="@id/checkbox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nsfw"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/checkbox2"
+        app:layout_constraintEnd_toStartOf="@id/checkbox2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectFlagInfo"
-        app:layout_constraintBottom_toTopOf="@+id/generateButton" />
+        app:layout_constraintTop_toBottomOf="@id/selectFlagInfo"
+        app:layout_constraintBottom_toTopOf="@id/generateButton" />
 
     <CheckBox
-        android:id="@+id/checkbox2"
+        android:id="@id/checkbox2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/religious"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/checkbox3"
-        app:layout_constraintStart_toEndOf="@+id/checkbox1"
-        app:layout_constraintTop_toBottomOf="@+id/selectFlagInfo"
-        app:layout_constraintBottom_toTopOf="@+id/generateButton" />
+        app:layout_constraintEnd_toStartOf="@id/checkbox3"
+        app:layout_constraintStart_toEndOf="@id/checkbox1"
+        app:layout_constraintTop_toBottomOf="@id/selectFlagInfo"
+        app:layout_constraintBottom_toTopOf="@id/generateButton" />
 
     <CheckBox
-        android:id="@+id/checkbox3"
+        android:id="@id/checkbox3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/political"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/checkbox4"
-        app:layout_constraintStart_toEndOf="@+id/checkbox2"
-        app:layout_constraintTop_toBottomOf="@+id/selectFlagInfo"
-        app:layout_constraintBottom_toTopOf="@+id/generateButton"/>
+        app:layout_constraintEnd_toStartOf="@id/checkbox4"
+        app:layout_constraintStart_toEndOf="@id/checkbox2"
+        app:layout_constraintTop_toBottomOf="@id/selectFlagInfo"
+        app:layout_constraintBottom_toTopOf="@id/generateButton"/>
 
     <CheckBox
-        android:id="@+id/checkbox4"
+        android:id="@id/checkbox4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/racist"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkbox3"
-        app:layout_constraintTop_toBottomOf="@+id/selectFlagInfo"
-        app:layout_constraintBottom_toTopOf="@+id/generateButton"/>
+        app:layout_constraintStart_toEndOf="@id/checkbox3"
+        app:layout_constraintTop_toBottomOf="@id/selectFlagInfo"
+        app:layout_constraintBottom_toTopOf="@id/generateButton"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/responseTimeText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,10 +78,10 @@
         app:layout_constraintTop_toBottomOf="@id/generateButton" />
 
     <TextView
-        android:id="@+id/responseTimeText"
+        android:id="@id/responseTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Waiting time: -"
+        android:text="@string/responseTimeString"
         android:textColor="@color/white"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
     <Button
-        android:id="@+id/generateButton"
+        android:id="@id/generateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/generateString"

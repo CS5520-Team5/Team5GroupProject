@@ -7,43 +7,43 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/introText"
+        android:id="@id/introText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is Team 5!"
+        android:text="@string/introTextString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnWebService"/>
+        app:layout_constraintBottom_toTopOf="@id/btnWebService"/>
 
     <Button
         android:id="@+id/btnWebService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Web Service"
+        android:text="@string/btnWebServiceString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlaceholder1"
-        app:layout_constraintTop_toBottomOf="@+id/introText" />
+        app:layout_constraintBottom_toTopOf="@id/btnPlaceholder1"
+        app:layout_constraintTop_toBottomOf="@id/introText" />
 
     <Button
-        android:id="@+id/btnPlaceholder1"
+        android:id="@id/btnPlaceholder1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PlaceHolder 1"
+        android:text="@string/btnPlaceholder1String"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnWebService"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlaceholder2"/>
+        app:layout_constraintTop_toBottomOf="@id/btnWebService"
+        app:layout_constraintBottom_toTopOf="@id/btnPlaceholder2"/>
 
     <Button
-        android:id="@+id/btnPlaceholder2"
+        android:id="@id/btnPlaceholder2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PlaceHolder 2"
+        android:text="@string/btnPlaceholder2String"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlaceholder1"
+        app:layout_constraintTop_toBottomOf="@id/btnPlaceholder1"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

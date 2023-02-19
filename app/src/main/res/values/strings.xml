@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">GroupProject</string>
+<!--    Strings in MainActivity-->
+    <string name="introTextString">This is Team 5!</string>
+    <string name="btnWebServiceString">Web Service</string>
+    <string name="btnPlaceholder1String">Placeholder1</string>
+    <string name="btnPlaceholder2String">Placeholder2</string>
+<!--    Strings in WebServiceActivity-->
     <string name="optional_select_flags_to_blacklist">(Optional) Select flags to filter the results:</string>
     <string name="nsfw">NSFW</string>
     <string name="religious">Religious</string>
     <string name="political">Political</string>
     <string name="racist">Racist</string>
     <string name="generateString">Generate Jokes</string>
+    <string name="responseTimeString">Waiting time: -</string>
+<!--    Strings in IndividualActivity-->
 </resources>
