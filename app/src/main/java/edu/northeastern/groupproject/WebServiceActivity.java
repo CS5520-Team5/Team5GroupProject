@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -26,30 +27,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
-    private CardView cardView;
+
     private TextView responseTimeText;
     private CheckBox cbNsfw, cbReligious, cbPolitical, cbRacist;
     private boolean noNsfw, noReligious, noPolitical, noRacist;
-    private FloatingActionButton fab;
+    private Button generateButton;
     private Handler handler = new Handler();
-    RecyclerView recyclerView;
-    RecyclerAdapter recyclerAdapter;
-    CounterThread counterThread;
-    ArrayList<Joke> jokes;
-    String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
+    private CounterThread counterThread;
+    private ArrayList<Joke> jokes;
+    private String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_service);
-        cardView = findViewById(R.id.cardGenerateJoke);
+        generateButton = findViewById(R.id.generateButton);
         cbNsfw = findViewById(R.id.checkbox1);
         cbReligious = findViewById(R.id.checkbox2);
         cbPolitical = findViewById(R.id.checkbox3);
         cbRacist = findViewById(R.id.checkbox4);
         responseTimeText = findViewById(R.id.responseTimeText);
-        fab=findViewById(R.id.fab_back);
 
         if(savedInstanceState!=null){
             jokes=savedInstanceState.getParcelableArrayList("jokes");
@@ -81,20 +81,13 @@ public class WebServiceActivity extends AppCompatActivity {
                 noRacist = !noRacist;
             }
         });
-        cardView.setOnClickListener(new View.OnClickListener() {
+        generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 JsonRunnable jsonRunnable = new JsonRunnable();
                 new Thread(jsonRunnable).start();
                 counterThread = new CounterThread();
                 counterThread.start();
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                finish();
             }
         });
 
