@@ -108,6 +108,7 @@ public class WebServiceActivity extends AppCompatActivity {
         public void run() {
             URL url;
             try {
+                jokes=new ArrayList<Joke>();
                 addBlacklistToURL();
                 url = new URL(basicURL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
