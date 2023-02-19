@@ -11,7 +11,7 @@
     <string name="religious">Religious</string>
     <string name="political">Political</string>
     <string name="racist">Racist</string>
-    <string name="generateString">Generate Jokes</string>
+    <string name="getJokesString">Get Jokes</string>
     <string name="responseTimeString">Waiting time: -</string>
 <!--    Strings in IndividualActivity-->
     <string name="categoryString">Category</string>
