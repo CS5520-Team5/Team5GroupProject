@@ -28,7 +28,7 @@
         tools:text="@string/categoryString"
         android:textAlignment="viewStart"
         android:textSize="20sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/darkGrey" />
 
     <TextView
         android:id="@id/text_setup"
@@ -42,7 +42,7 @@
         tools:text="@string/setupString"
         android:textAlignment="viewStart"
         android:textSize="20sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/grey" />
 
     <TextView
         android:id="@id/text_delivery"
@@ -57,6 +57,6 @@
         tools:text="@string/deliveryString"
         android:textAlignment="viewStart"
         android:textSize="20sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
