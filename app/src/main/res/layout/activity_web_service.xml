@@ -11,6 +11,7 @@
         android:id="@+id/selectFlagInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="@string/optional_select_flags_to_blacklist"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,9 +66,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/responseTimeText"
         app:layout_constraintEnd_toEndOf="parent"
