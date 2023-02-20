@@ -84,6 +84,8 @@ public class WebServiceActivity extends AppCompatActivity {
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                jokes.clear();
+                recyclerAdapter.notifyDataSetChanged();
                 JsonRunnable jsonRunnable = new JsonRunnable();
                 new Thread(jsonRunnable).start();
                 counterThread = new CounterThread();
