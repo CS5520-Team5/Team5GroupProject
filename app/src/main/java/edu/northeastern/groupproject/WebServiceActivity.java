@@ -1,7 +1,6 @@
 package edu.northeastern.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +21,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class WebServiceActivity extends AppCompatActivity {
@@ -86,6 +84,7 @@ public class WebServiceActivity extends AppCompatActivity {
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Check if the thread is working on display new jokes
                 if (!isDisplaying) {
                     jokes.clear();
                     recyclerAdapter.notifyDataSetChanged();
@@ -118,12 +117,15 @@ public class WebServiceActivity extends AppCompatActivity {
         public void run() {
             URL url;
             try {
-                addBlacklistToURL();
-                url = new URL(basicURL);
+                // Concatenate the URL
+                String flagsString = getFlagsString();
+                url = new URL(basicURL + flagsString);
+                // Connect to the server
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
+                // Get message in JSON
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
                 parseInputToJokes(jsonObject);
@@ -145,6 +147,7 @@ public class WebServiceActivity extends AppCompatActivity {
             return s.hasNext() ? s.next().replace(",", ",\n") : "";
         }
     }
+
     private void parseInputToJokes(JSONObject jsonObject) throws JSONException {
         // example output: https://v2.jokeapi.dev/joke/Any?type=twopart&amount=5&blacklistFlags=
         JSONArray jsonArray=jsonObject.getJSONArray("jokes");
@@ -158,19 +161,23 @@ public class WebServiceActivity extends AppCompatActivity {
         }
     }
 
-    private void addBlacklistToURL() {
-        ArrayList<String> blacklistFlags=new ArrayList<>();
+    // Return a string containing all filter flags
+    private String getFlagsString () {
+        List<String> flagsList=new ArrayList<>();
         if(noNsfw){
-            blacklistFlags.add("nsfw");
+            flagsList.add("nsfw");
         }else if(noReligious){
-            blacklistFlags.add("religious");
+            flagsList.add("religious");
         }else if(noPolitical){
-            blacklistFlags.add("political");
+            flagsList.add("political");
         }else if(noRacist){
-            blacklistFlags.add("racist");
+            flagsList.add("racist");
+        } else {
+            return null;
         }
-        String blacklistStr=String.join(",",blacklistFlags);
-        basicURL+="&&blacklistFlags="+blacklistStr;
+        // Concatenate the result string
+        String flagsString = "&&blacklistFlags=" + String.join(",",flagsList);
+        return flagsString;
     }
 
     // Inner class to display a counter for API response time
