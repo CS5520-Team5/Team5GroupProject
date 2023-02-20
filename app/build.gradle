@@ -3,6 +3,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/linus/Documents/cs5520/keystore/Untitled')
+            storePassword 'Guo1yu2sheng!'
+            keyAlias 'my first key'
+            keyPassword 'Guo1yu2sheng!'
+        }
+        release {
+            storeFile file('/Users/linus/Documents/cs5520/keystore/Untitled')
+            storePassword 'Guo1yu2sheng!'
+            keyAlias 'my first key'
+            keyPassword 'Guo1yu2sheng!'
+        }
+    }
     namespace 'edu.northeastern.groupproject'
     compileSdk 33
 
@@ -14,6 +28,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
