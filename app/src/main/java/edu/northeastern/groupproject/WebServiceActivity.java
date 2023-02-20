@@ -116,10 +116,6 @@ public class WebServiceActivity extends AppCompatActivity {
                 InputStream inputStream = conn.getInputStream();
                 JSONObject jsonObject = new JSONObject(inputStreamToString(inputStream));
                 parseInputToJokes(jsonObject);
-                System.out.println(basicURL);
-                System.out.println(jokes.get(0).toString());
-                System.out.println(recyclerAdapter.getItemCount()); // 10
-//                System.out.println(recyclerAdapter.);
             } catch (Exception e) {
                 e.printStackTrace();
             }
