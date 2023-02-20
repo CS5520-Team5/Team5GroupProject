@@ -1,7 +1,6 @@
 package edu.northeastern.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +81,8 @@ public class WebServiceActivity extends AppCompatActivity {
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                jokes.clear();
+                recyclerAdapter.notifyDataSetChanged();
                 JsonRunnable jsonRunnable = new JsonRunnable();
                 new Thread(jsonRunnable).start();
                 counterThread = new CounterThread();
@@ -108,7 +107,6 @@ public class WebServiceActivity extends AppCompatActivity {
         public void run() {
             URL url;
             try {
-                jokes=new ArrayList<Joke>();
                 addBlacklistToURL();
                 url = new URL(basicURL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
