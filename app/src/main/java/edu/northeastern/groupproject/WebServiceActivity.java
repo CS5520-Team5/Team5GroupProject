@@ -36,6 +36,8 @@ public class WebServiceActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
     private CounterThread counterThread;
+    private Thread displayJokesThread;
+    private boolean isDisplaying = false;
     private ArrayList<Joke> jokes;
     private String basicURL = "https://v2.jokeapi.dev/joke/Any?type=twopart&amount=10";
 
@@ -84,13 +86,17 @@ public class WebServiceActivity extends AppCompatActivity {
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jokes.clear();
-                recyclerAdapter.notifyDataSetChanged();
-                JsonRunnable jsonRunnable = new JsonRunnable();
-                new Thread(jsonRunnable).start();
-                counterThread = new CounterThread();
-                counterThread.start();
-                recyclerAdapter.notifyDataSetChanged();
+                if (!isDisplaying) {
+                    jokes.clear();
+                    recyclerAdapter.notifyDataSetChanged();
+                    JsonRunnable jsonRunnable = new JsonRunnable();
+                    displayJokesThread = new Thread(jsonRunnable);
+                    displayJokesThread.start();
+                    recyclerAdapter.notifyDataSetChanged();
+                    counterThread = new CounterThread();
+                    counterThread.start();
+                    isDisplaying = true;
+                }
             }
         });
 
@@ -106,6 +112,7 @@ public class WebServiceActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("jokes", (ArrayList<? extends Parcelable>) jokes);
     }
+
     class JsonRunnable implements Runnable{
         @Override
         public void run() {
@@ -126,7 +133,9 @@ public class WebServiceActivity extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    isDisplaying = false;
                     counterThread.interrupt();
+                    displayJokesThread.interrupt();
                 }
             });
         }
@@ -169,7 +178,7 @@ public class WebServiceActivity extends AppCompatActivity {
         private int n = 0;
         @Override
         public void run() {
-            while (!Thread.currentThread().isInterrupted() && n < Integer.MAX_VALUE) {
+            while (!counterThread.isInterrupted() && n < Integer.MAX_VALUE) {
                 handler.post(
                     new Runnable() {
                         @Override
