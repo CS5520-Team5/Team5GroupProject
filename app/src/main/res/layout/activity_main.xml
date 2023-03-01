@@ -23,14 +23,14 @@
         android:text="@string/btnWebServiceString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnPlaceholder1"
+        app:layout_constraintBottom_toTopOf="@id/btnAboutUs"
         app:layout_constraintTop_toBottomOf="@id/introText" />
 
     <Button
-        android:id="@id/btnPlaceholder1"
+        android:id="@id/btnAboutUs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnPlaceholder1String"
+        android:text="@string/btnAboutUsString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnWebService"
@@ -43,7 +43,7 @@
         android:text="@string/btnPlaceholder2String"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnPlaceholder1"
+        app:layout_constraintTop_toBottomOf="@id/btnAboutUs"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
