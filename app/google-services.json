@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "431677512251",
+    "project_id": "team5-9cb36",
+    "storage_bucket": "team5-9cb36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431677512251:android:93f9a7e637f2781f0a9a1e",
+        "android_client_info": {
+          "package_name": "edu.northeastern.groupproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431677512251-as4ioctnk8jetnon1bhlefv0m0epar9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjoYGBSH1strIK_UvzjpZeZFVt25lCzCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431677512251-as4ioctnk8jetnon1bhlefv0m0epar9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
