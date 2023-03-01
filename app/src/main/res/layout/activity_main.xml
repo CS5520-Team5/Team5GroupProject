@@ -14,7 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnWebService"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/btnWebService"
@@ -23,8 +24,8 @@
         android:text="@string/btnWebServiceString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnAboutUs"
-        app:layout_constraintTop_toBottomOf="@id/introText" />
+        app:layout_constraintTop_toBottomOf="@id/introText"
+        app:layout_constraintBottom_toTopOf="@id/btnAboutUs" />
 
     <Button
         android:id="@id/btnAboutUs"
@@ -34,16 +35,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnWebService"
-        app:layout_constraintBottom_toTopOf="@id/btnPlaceholder2"/>
+        app:layout_constraintBottom_toTopOf="@id/btnSendASticker" />
 
     <Button
-        android:id="@id/btnPlaceholder2"
+        android:id="@id/btnSendASticker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnPlaceholder2String"
+        android:text="@string/btnSendAStickerString"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnAboutUs"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
