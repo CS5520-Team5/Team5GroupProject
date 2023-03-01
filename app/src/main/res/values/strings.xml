@@ -3,7 +3,7 @@
 <!--    Strings in MainActivity-->
     <string name="introTextString">This is Team 5!</string>
     <string name="btnWebServiceString">Web Service</string>
-    <string name="btnPlaceholder1String">Placeholder1</string>
+    <string name="btnAboutUsString">About</string>
     <string name="btnPlaceholder2String">Placeholder2</string>
 <!--    Strings in WebServiceActivity-->
     <string name="optional_select_flags_to_blacklist">(Optional) Select flags to filter the results:</string>
@@ -17,4 +17,5 @@
     <string name="categoryString">Category</string>
     <string name="setupString">Setup</string>
     <string name="deliveryString">Delivery</string>
+    <string name="groupMemeberInfo">This is Team 5!\n\nYanan Dong\nZhuoya Huang\nYuchi Shi\nYusheng Guo\nHua Cong</string>
 </resources>

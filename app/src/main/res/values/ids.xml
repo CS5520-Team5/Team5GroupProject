@@ -3,7 +3,7 @@
 <!--    IDs in MainActivity-->
     <item name="introText" type="id" />
     <item name="btnWebService" type="id" />
-    <item name="btnPlaceholder1" type="id" />
+    <item name="btnAboutUs" type="id" />
     <item name="btnPlaceholder2" type="id" />
 <!--    IDs in WebServiceActivity-->
     <item name="selectFlagInfo" type="id" />
