@@ -1,11 +1,12 @@
 package edu.northeastern.groupproject;
 
 public class User {
+
     String name;
     int id;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -13,7 +14,7 @@ public class User {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
