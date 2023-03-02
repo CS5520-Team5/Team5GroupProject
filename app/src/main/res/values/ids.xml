@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    IDs in MainActivity-->
+    <!--    IDs in MainActivity-->
     <item name="introText" type="id" />
     <item name="btnWebService" type="id" />
     <item name="btnAboutUs" type="id" />
     <item name="btnSendASticker" type="id" />
-<!--    IDs in WebServiceActivity-->
+    <!--    IDs in WebServiceActivity-->
     <item name="selectFlagInfo" type="id" />
     <item name="checkbox1" type="id" />
     <item name="checkbox2" type="id" />
@@ -14,10 +14,13 @@
     <item name="recyclerView" type="id" />
     <item name="responseTimeText" type="id" />
     <item name="generateButton" type="id" />
-<!--    IDs in IndividualActivity-->
+    <!--    IDs in IndividualActivity-->
     <item name="image_category" type="id" />
     <item name="text_category" type="id" />
     <item name="text_setup" type="id" />
     <item name="text_delivery" type="id" />
+    <!--    IDs in UserRecyclerView-->
+    <item name="username" type="id" />
+    <item name="time" type="id" />
 
 </resources>

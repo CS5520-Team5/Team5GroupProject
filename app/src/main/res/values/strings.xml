@@ -17,8 +17,13 @@
     <string name="categoryString">Category</string>
     <string name="setupString">Setup</string>
     <string name="deliveryString">Delivery</string>
-    <string name="groupMemeberInfo">This is Team 5!\n\nYanan Dong\nZhuoya Huang\nYuchi Shi\nYusheng Guo\nHua Cong</string>
-    <string name="login_reminder">Please enter your user name below to log in.</string>
-    <string name="enter_username_hint">Enter your user name here</string>
-    <string name="login_string">Login</string>
+    <!--    Strings in AboutUsActivity-->
+    <string name="groupMemberString">This is Team 5!\n\nYanan Dong\nZhuoya Huang\nYuchi Shi\nYusheng Guo\nHua Cong</string>
+    <!--    Strings in LoginActivity-->
+    <string name="loginReminderString">Please enter your username below to log in.</string>
+    <string name="enterUsernameHintString">Username</string>
+    <string name="loginString">Login</string>
+    <!--    Strings in UserRecyclerView-->
+    <string name="userName">Username</string>
+    <string name="userId">User ID</string>
 </resources>
