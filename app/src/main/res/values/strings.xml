@@ -24,6 +24,11 @@
     <string name="enterUsernameHintString">Username</string>
     <string name="loginString">Login</string>
     <!--    Strings in UserRecyclerView-->
-    <string name="userName">Username</string>
+    <string name="username">Username</string>
     <string name="userId">User ID</string>
+    <!--    Strings in StickerViewHolder-->
+    <string name="timeString">Time</string>
+    <string name="textString">Text</string>
+    <string name="senderString">Sender</string>
+
 </resources>

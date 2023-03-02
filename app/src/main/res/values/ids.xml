@@ -19,8 +19,12 @@
     <item name="text_category" type="id" />
     <item name="text_setup" type="id" />
     <item name="text_delivery" type="id" />
-    <!--    IDs in UserRecyclerView-->
+    <!--    IDs in UserViewHolder-->
     <item name="username" type="id" />
     <item name="time" type="id" />
-
+    <!--    IDs in UserRecyclerView-->
+    <item name="userRecyclerView" type="id" />
+    <!--    IDs in StickerViewHolder-->
+    <item name="image" type="id" />
+    <item name="text" type="id" />
 </resources>
