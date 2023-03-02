@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">GroupProject</string>
-<!--    Strings in MainActivity-->
+    <!--    Strings in MainActivity-->
     <string name="introTextString">This is Team 5!</string>
     <string name="btnWebServiceString">Web Service</string>
     <string name="btnAboutUsString">About</string>
     <string name="btnSendAStickerString">Send A Sticker</string>
-<!--    Strings in WebServiceActivity-->
+    <!--    Strings in WebServiceActivity-->
     <string name="optional_select_flags_to_blacklist">(Optional) Select flags to filter the results:</string>
     <string name="nsfw">NSFW</string>
     <string name="religious">Religious</string>
@@ -13,7 +13,7 @@
     <string name="racist">Racist</string>
     <string name="getJokesString">Get Jokes</string>
     <string name="responseTimeString">Waiting time: -</string>
-<!--    Strings in IndividualActivity-->
+    <!--    Strings in IndividualActivity-->
     <string name="categoryString">Category</string>
     <string name="setupString">Setup</string>
     <string name="deliveryString">Delivery</string>
