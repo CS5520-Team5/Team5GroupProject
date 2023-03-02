@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     long count = dataSnapshot.getChildrenCount();
-                                    showToast(name);
                                     User newUser = new User();
                                     //User id start from 100
                                     newUser.setId((int) count + 100);
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    System.out.println(error.getMessage());
+                                    showToast("Something went wrong, please try again.");
                                 }
 
                             };
