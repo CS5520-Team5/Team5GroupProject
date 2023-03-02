@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "431677512251",
+    "firebase_url": "https://team5-9cb36-default-rtdb.firebaseio.com",
     "project_id": "team5-9cb36",
     "storage_bucket": "team5-9cb36.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431677512251:android:93f9a7e637f2781f0a9a1e",
+        "mobilesdk_app_id": "1:431677512251:android:a0c7b34ef53786850a9a1e",
         "android_client_info": {
           "package_name": "edu.northeastern.groupproject"
         }

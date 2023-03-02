@@ -1,5 +1,6 @@
 package edu.northeastern.groupproject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,8 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (user != null && !TextUtils.isEmpty(user.name)) {
                             SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
                             sharedPreferences.edit().putString("name", name).apply();
-                            // To Do
-                            // startActivity(new Intent(MainActivity.this, XXXXXXXXX));
+                             startActivity(new Intent(LoginActivity.this, StickerActivity.class));
                         }
                     }
                     progressBar.setVisibility(View.GONE);
