@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,18 +56,34 @@ public class LoginActivity extends AppCompatActivity {
                         // Get user information
                         User user = task.getResult().getValue(User.class);
                         // Check if user exists
-                        if (user != null && user.name != null && user.name.length() > 0) {
-                            // Save username
-                            SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-                            sharedPreferences.edit().putString("name", name).apply();
-                            // Start new activity
-                            Intent intent = new Intent(LoginActivity.this, StickerActivity.class);
-                            startActivity(intent);
-                        } else {
-                            // Display a toast if user not exists
-                            String notExistsMsg = "User not exists!";
-                            showToast(notExistsMsg);
+                        if (!(user != null && user.name != null && user.name.length() > 0)) {
+                            ValueEventListener valueEventListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    long count = dataSnapshot.getChildrenCount();
+                                    showToast(name);
+                                    User newUser = new User();
+                                    //User id start from 100
+                                    newUser.setId((int) count + 100);
+                                    newUser.setName(name);
+                                    databaseReference.setValue(newUser);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    System.out.println(error.getMessage());
+                                }
+
+                            };
+                            DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("User");
+                            d.addListenerForSingleValueEvent(valueEventListener);
+
                         }
+                        SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+                        sharedPreferences.edit().putString("name", name).apply();
+                        // Start new activity
+                        Intent intent = new Intent(LoginActivity.this, StickerActivity.class);
+                        startActivity(intent);
                     }
                 }
             });
