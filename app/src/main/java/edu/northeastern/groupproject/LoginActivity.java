@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editText;
     private Button loginButton;
     private DatabaseReference databaseReference;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         editText = findViewById(R.id.editTxt_login);
-        progressBar = findViewById(R.id.loadingCircle);
         loginButton = findViewById(R.id.btn_login);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         String name = editText.getText().toString();
         // Check if the username is empty
         if (name.length() != 0) {
-            progressBar.setVisibility(View.VISIBLE);
             databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(name);
             databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
@@ -55,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Get user information
                         User user = task.getResult().getValue(User.class);
+                        // Check if user exists
                         if (user != null && user.name != null && user.name.length() > 0) {
                             // Save username
                             SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
@@ -62,15 +60,18 @@ public class LoginActivity extends AppCompatActivity {
                             // Start new activity
                             Intent intent = new Intent(LoginActivity.this, StickerActivity.class);
                             startActivity(intent);
+                        } else {
+                            // Display a toast if user not exists
+                            String notExistsMsg = "User not exists!";
+                            showToast(notExistsMsg);
                         }
                     }
-                    progressBar.setVisibility(View.GONE);
                 }
             });
         } else {
             // Display a toast if the username is empty
-            String msg = "Username can not be empty!";
-            showToast(msg);
+            String emptyMsg = "Username can not be empty!";
+            showToast(emptyMsg);
         }
     }
 
