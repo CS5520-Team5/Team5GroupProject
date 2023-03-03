@@ -13,8 +13,8 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    List<User> userList;
-    Context context;
+    private List<User> userList;
+    private Context context;
 
     public UserAdapter(List<User> userList, Context context) {
         this.userList = userList;
@@ -31,8 +31,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = userList.get(position);
-        holder.username.setText(user.getName());
-        holder.time.setText(user.getId() + "");
+        holder.getUsername().setText(user.getName());
+        holder.getTime().setText(user.getId() + "");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,13 +50,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView username;
-        TextView time;
+        private TextView username;
+        private TextView time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username);
             time = itemView.findViewById(R.id.time);
+        }
+
+        public TextView getUsername() {
+            return this.username;
+        }
+
+        public TextView getTime() {
+            return this.time;
         }
     }
 
