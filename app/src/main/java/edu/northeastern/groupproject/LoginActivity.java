@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
                         sharedPreferences.edit().putString("name", name).apply();
                         // Start new activity
-                        Intent intent = new Intent(LoginActivity.this, StickerActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, ConversationActivity.class);
                         startActivity(intent);
                     }
                 }

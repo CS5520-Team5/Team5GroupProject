@@ -10,9 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHolder> {
 
@@ -34,21 +37,22 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Sticker sticker = stickerList.get(position);
-        holder.getUsername().setText(sticker.getSender());
-        holder.getTime().setText(formatTime(sticker.getTime()));
-        String imageId = sticker.getImageId();
-        // TODO: Replace placeholders with sticker images and IDs
-//        switch (imageId) {
-//            case "PLACEHOLDER1":
-//                holder.image.setImageResource(R.drawable.PLACEHOLDER1);
-//                break;
-//            case "PLACEHOLDER2":
-//                holder.image.setImageResource(R.drawable.PLACEHOLDER2);
-//                break;
-//            case "PLACEHOLDER3":
-//                holder.image.setImageResource(R.drawable.PLACEHOLDER3);
-//                break;
-//        }
+        holder.username.setText(sticker.getRecipient());
+        holder.time.setText(formatTime(sticker.getTime()));
+        if (sticker.getImageId().equals("smile")){
+            Glide.with(context).asGif().load(R.drawable.ic_like).override(100,100).into(holder.image);
+        } else if (sticker.getImageId().equals("kiss")){
+            Glide.with(context).asGif().load(R.drawable.ic_kiss).override(100,100).into(holder.image);
+        }else if (sticker.getImageId().equals("think")){
+            Glide.with(context).asGif().load(R.drawable.ic_think).override(100,100).into(holder.image);
+        }else if (sticker.getImageId().equals("wink")){
+            Glide.with(context).asGif().load(R.drawable.ic_happy).override(100,100).into(holder.image);
+        }else if (sticker.getImageId().equals("expressionless")){
+            Glide.with(context).asGif().load(R.drawable.ic_wipe).override(100,100).into(holder.image);
+        }else if (sticker.getImageId().equals("star")){
+            Glide.with(context).asGif().load(R.drawable.ic_star).override(100,100).into(holder.image);
+        }
+
     }
 
     @Override
