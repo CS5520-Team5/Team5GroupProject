@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -106,6 +107,20 @@ public class ConversationActivity extends AppCompatActivity {
             }
             return;
         }
+        int ic = -1;
+        if (sticker.getImageId().equals("like")){
+            ic = R.drawable.ic_like;
+        } else if (sticker.getImageId().equals("kiss")){
+            ic = R.drawable.ic_kiss;
+        }else if (sticker.getImageId().equals("think")){
+            ic = R.drawable.ic_think;
+        }else if (sticker.getImageId().equals("happy")){
+            ic = R.drawable.ic_happy;
+        }else if (sticker.getImageId().equals("wipe")){
+            ic = R.drawable.ic_wipe;
+        }else if (sticker.getImageId().equals("star")){
+            ic = R.drawable.ic_star;
+        }
         Intent intent = new Intent(this,ConversationActivity.class);
         PendingIntent pendingIntent;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
@@ -114,10 +129,10 @@ public class ConversationActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 123, intent, PendingIntent.FLAG_ONE_SHOT);
         }
         Notification notification = new NotificationCompat.Builder(this,"notice")
-                .setContentText("You have a new message!")
+                .setContentText("New sticker added to chat!")
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_message)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_message))
+                .setSmallIcon(ic)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),ic))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .build();

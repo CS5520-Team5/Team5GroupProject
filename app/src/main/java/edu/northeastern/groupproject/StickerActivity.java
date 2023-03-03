@@ -109,7 +109,7 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
         resetStickersSize();
         clearSelect();
         if (view.getId()==R.id.ic_like){
-            checkId = "smile";
+            checkId = "like";
             ic_like.getLayoutParams().height = 200;
             ic_like.getLayoutParams().width = 200;
             ic_like.requestLayout();
@@ -124,12 +124,12 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
             ic_think.getLayoutParams().width = 200;
             ic_think.requestLayout();
         }else if (view.getId()==R.id.ic_happy){
-            checkId = "wink";
+            checkId = "happy";
             ic_happy.getLayoutParams().height = 200;
             ic_happy.getLayoutParams().width = 200;
             ic_happy.requestLayout();
         }else if (view.getId()==R.id.ic_wipe){
-            checkId = "expressionless";
+            checkId = "wipe";
             ic_wipe.getLayoutParams().height = 200;
             ic_wipe.getLayoutParams().width = 200;
             ic_wipe.requestLayout();

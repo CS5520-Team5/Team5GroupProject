@@ -39,15 +39,15 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
         Sticker sticker = stickerList.get(position);
         holder.username.setText(sticker.getRecipient());
         holder.time.setText(formatTime(sticker.getTime()));
-        if (sticker.getImageId().equals("smile")){
+        if (sticker.getImageId().equals("like")){
             Glide.with(context).asGif().load(R.drawable.ic_like).override(100,100).into(holder.image);
         } else if (sticker.getImageId().equals("kiss")){
             Glide.with(context).asGif().load(R.drawable.ic_kiss).override(100,100).into(holder.image);
         }else if (sticker.getImageId().equals("think")){
             Glide.with(context).asGif().load(R.drawable.ic_think).override(100,100).into(holder.image);
-        }else if (sticker.getImageId().equals("wink")){
+        }else if (sticker.getImageId().equals("happy")){
             Glide.with(context).asGif().load(R.drawable.ic_happy).override(100,100).into(holder.image);
-        }else if (sticker.getImageId().equals("expressionless")){
+        }else if (sticker.getImageId().equals("wipe")){
             Glide.with(context).asGif().load(R.drawable.ic_wipe).override(100,100).into(holder.image);
         }else if (sticker.getImageId().equals("star")){
             Glide.with(context).asGif().load(R.drawable.ic_star).override(100,100).into(holder.image);
