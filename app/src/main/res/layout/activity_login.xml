@@ -8,7 +8,7 @@
         android:id="@+id/txt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="172dp"
         android:text="@string/loginReminderString"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -21,13 +21,14 @@
         android:id="@+id/editTxt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="68dp"
         android:ems="11"
         android:hint="@string/enterUsernameHintString"
         android:inputType="textPersonName"
-        android:textAlignment="center"
         android:maxLength="10"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_login" />
 
@@ -35,9 +36,10 @@
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="76dp"
         android:text="@string/loginString"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTxt_login" />
 
