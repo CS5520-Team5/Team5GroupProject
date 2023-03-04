@@ -204,11 +204,11 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
                     }
                     updateCount(sticker,sender);
                 }
-                like_tv.setText("Smile: " + like_cnt);
+                like_tv.setText("Like: " + like_cnt);
                 kiss_tv.setText("Kiss: " + kiss_cnt);
                 think_tv.setText("Think: " + think_cnt);
-                happy_tv.setText("Wink: " + happy_cnt);
-                wipe_tv.setText("Exp.less: " + wipe_cnt);
+                happy_tv.setText("Happy: " + happy_cnt);
+                wipe_tv.setText("Wipe: " + wipe_cnt);
                 star_tv.setText("Star: " + star_cnt);
                 mAdapter.notifyDataSetChanged();
 
