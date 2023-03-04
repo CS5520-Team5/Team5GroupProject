@@ -50,21 +50,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView username;
-        private TextView time;
+        private TextView userName;
+        private TextView timePeriod;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            username = itemView.findViewById(R.id.username);
-            time = itemView.findViewById(R.id.time);
+            userName = itemView.findViewById(R.id.username);
+            timePeriod = itemView.findViewById(R.id.time);
         }
 
         public TextView getUsername() {
-            return this.username;
+            return this.userName;
         }
 
         public TextView getTime() {
-            return this.time;
+            return this.timePeriod;
         }
     }
 

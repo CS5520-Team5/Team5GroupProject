@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Get user information
                         User user = task.getResult().getValue(User.class);
                         // Check if user exists
-                        if (!(user != null && user.name != null && user.name.length() > 0)) {
+                        if (!(user != null && user.userName != null && user.userName.length() > 0)) {
                             ValueEventListener valueEventListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {

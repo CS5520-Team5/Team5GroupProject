@@ -9,26 +9,27 @@
         android:id="@id/image_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/text_setup"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/misc" />
 
     <TextView
         android:id="@id/text_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/image_category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/text_setup"
-        app:layout_constraintHorizontal_bias="0.1"
-        tools:text="@string/categoryString"
         android:textAlignment="viewStart"
+        android:textColor="@color/darkGrey"
         android:textSize="20sp"
-        android:textColor="@color/darkGrey" />
+        app:layout_constraintBottom_toTopOf="@id/text_setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toEndOf="@id/image_category"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.761"
+        tools:text="@string/categoryString" />
 
     <TextView
         android:id="@id/text_setup"
@@ -48,15 +49,15 @@
         android:id="@id/text_delivery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_setup"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         android:layout_marginBottom="12dp"
-        tools:text="@string/deliveryString"
         android:textAlignment="viewStart"
+        android:textColor="@color/grey"
         android:textSize="20sp"
-        android:textColor="@color/grey" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_setup"
+        tools:text="@string/deliveryString" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

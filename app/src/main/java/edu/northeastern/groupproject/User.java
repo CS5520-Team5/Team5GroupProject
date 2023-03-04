@@ -2,22 +2,22 @@ package edu.northeastern.groupproject;
 
 public class User {
 
-    String name;
-    int id;
+    String userName;
+    int userId;
 
     public String getName() {
-        return this.name;
+        return this.userName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
 
     public int getId() {
-        return this.id;
+        return this.userId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.userId = id;
     }
 }
