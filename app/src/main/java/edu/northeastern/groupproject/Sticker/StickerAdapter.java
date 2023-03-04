@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.Sticker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import edu.northeastern.groupproject.R;
 
 
 public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHolder> {

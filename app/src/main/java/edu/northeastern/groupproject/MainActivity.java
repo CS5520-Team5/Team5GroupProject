@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.northeastern.groupproject.Sticker.LoginActivity;
+import edu.northeastern.groupproject.WebService.WebServiceActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnWebService, btnAboutUs, btnSendASticker;

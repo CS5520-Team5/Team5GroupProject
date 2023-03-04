@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.Sticker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import edu.northeastern.groupproject.R;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 

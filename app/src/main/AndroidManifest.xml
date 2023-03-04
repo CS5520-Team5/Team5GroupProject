@@ -15,21 +15,21 @@
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
         <activity
-            android:name=".ConversationActivity"
+            android:name=".Sticker.ConversationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StickerActivity"
+            android:name=".Sticker.StickerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".WebServiceActivity"
+            android:name=".WebService.WebServiceActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -52,7 +52,7 @@
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Sticker.LoginActivity"
             android:exported="false" />
     </application>
 

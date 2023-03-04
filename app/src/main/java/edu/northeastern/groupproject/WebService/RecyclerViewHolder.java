@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.WebService;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import edu.northeastern.groupproject.R;
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     public ImageView image_category;

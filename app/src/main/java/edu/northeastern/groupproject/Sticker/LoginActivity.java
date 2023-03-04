@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.Sticker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import edu.northeastern.groupproject.R;
 
 public class LoginActivity extends AppCompatActivity {
 
