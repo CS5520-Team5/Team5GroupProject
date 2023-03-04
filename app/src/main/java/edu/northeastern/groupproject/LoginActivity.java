@@ -43,10 +43,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        String name = editText.getText().toString();
+        String loginName = editText.getText().toString();
         // Check if the username is empty
-        if (name.length() != 0) {
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(name);
+        if (loginName.length() != 0) {
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(loginName);
             databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                     User newUser = new User();
                                     //User id start from 100
                                     newUser.setId((int) count + 100);
-                                    newUser.setName(name);
+                                    newUser.setName(loginName);
                                     databaseReference.setValue(newUser);
                                 }
 
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                         SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-                        sharedPreferences.edit().putString("name", name).apply();
+                        sharedPreferences.edit().putString("name", loginName).apply();
                         // Start new activity
                         Intent intent = new Intent(LoginActivity.this, ConversationActivity.class);
                         startActivity(intent);
@@ -86,8 +86,8 @@ public class LoginActivity extends AppCompatActivity {
             });
         } else {
             // Display a toast if the username is empty
-            String emptyMsg = "Username can not be empty!";
-            showToast(emptyMsg);
+            String msgForEmpty = "Username can not be empty!";
+            showToast(msgForEmpty);
         }
     }
 
