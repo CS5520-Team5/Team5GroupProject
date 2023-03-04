@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.WebService;
 
 import android.os.Parcel;
 import android.os.Parcelable;

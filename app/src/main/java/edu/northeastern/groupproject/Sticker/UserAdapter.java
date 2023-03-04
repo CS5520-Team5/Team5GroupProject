@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.Sticker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import edu.northeastern.groupproject.R;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
@@ -32,7 +34,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = userList.get(position);
         holder.getUsername().setText(user.getName());
-        holder.getTime().setText(user.getId() + "");
+        holder.getUserId().setText(user.getId() + "");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,20 +53,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView userName;
-        private TextView timePeriod;
+        private TextView userId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.username);
-            timePeriod = itemView.findViewById(R.id.time);
+            userId = itemView.findViewById(R.id.userid);
         }
 
         public TextView getUsername() {
             return this.userName;
         }
 
-        public TextView getTime() {
-            return this.timePeriod;
+        public TextView getUserId() {
+            return this.userId;
         }
     }
 

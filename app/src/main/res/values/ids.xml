@@ -21,7 +21,7 @@
     <item name="text_delivery" type="id" />
     <!--    IDs in UserViewHolder-->
     <item name="username" type="id" />
-    <item name="time" type="id" />
+    <item name="userid" type="id" />
     <!--    IDs in UserRecyclerView-->
     <item name="userRecyclerView" type="id" />
     <!--    IDs in StickerViewHolder-->

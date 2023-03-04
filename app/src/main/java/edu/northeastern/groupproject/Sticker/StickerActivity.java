@@ -1,4 +1,4 @@
-package edu.northeastern.groupproject;
+package edu.northeastern.groupproject.Sticker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.northeastern.groupproject.R;
+
 public class StickerActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static String sender ="";
@@ -35,15 +38,24 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference databaseReference;
     private StickerAdapter mAdapter;
     private RecyclerView rvChat;
-
-
+    public int like_cnt,kiss_cnt, think_cnt,happy_cnt,wipe_cnt,star_cnt;
+    public TextView like_tv,kiss_tv, think_tv,happy_tv,wipe_tv, star_tv;
+    private ImageView ic_like,ic_kiss,ic_think,ic_happy,ic_wipe,ic_star;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker);
+        // connect to count textviews
+        like_tv=findViewById(R.id.like_count);
+        kiss_tv=findViewById(R.id.kiss_count);
+        think_tv=findViewById(R.id.think_count);
+        happy_tv=findViewById(R.id.happy_count);
+        wipe_tv=findViewById(R.id.wipe_count);
+        star_tv=findViewById(R.id.star_count);
+        // set action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        // set communication stuff
         databaseReference = FirebaseDatabase.getInstance().getReference();
         recipient = getIntent().getStringExtra("toId");
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
@@ -53,8 +65,6 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
         rvChat.setLayoutManager(mLinearLayout);
         rvChat.setAdapter(mAdapter);
-
-
         getData(sender, recipient);
         findViewById(R.id.iv_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +72,7 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
                 sendText(checkId);
             }
         });
+        // set stickers
         ic_like = findViewById(R.id.ic_like);
         ic_like .setOnClickListener(this);
         ic_kiss =  findViewById(R.id.ic_kiss);
@@ -104,48 +115,36 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
         ic_star.requestLayout();
 
     }
+    private void highlightSticker(ImageView v){
+        v.getLayoutParams().height = 200;
+        v.getLayoutParams().width = 200;
+        v.requestLayout();
+    }
     @Override
     public void onClick(View view) {
         resetStickersSize();
         clearSelect();
         if (view.getId()==R.id.ic_like){
             checkId = "like";
-            ic_like.getLayoutParams().height = 200;
-            ic_like.getLayoutParams().width = 200;
-            ic_like.requestLayout();
+            highlightSticker(ic_like);
         }else if (view.getId()==R.id.ic_kiss){
             checkId = "kiss";
-            ic_kiss.getLayoutParams().height = 200;
-            ic_kiss.getLayoutParams().width = 200;
-            ic_kiss.requestLayout();
+            highlightSticker(ic_kiss);
         }else if (view.getId()==R.id.ic_think){
             checkId = "think";
-            ic_think.getLayoutParams().height = 200;
-            ic_think.getLayoutParams().width = 200;
-            ic_think.requestLayout();
+            highlightSticker(ic_think);
         }else if (view.getId()==R.id.ic_happy){
             checkId = "happy";
-            ic_happy.getLayoutParams().height = 200;
-            ic_happy.getLayoutParams().width = 200;
-            ic_happy.requestLayout();
+            highlightSticker(ic_happy);
         }else if (view.getId()==R.id.ic_wipe){
             checkId = "wipe";
-            ic_wipe.getLayoutParams().height = 200;
-            ic_wipe.getLayoutParams().width = 200;
-            ic_wipe.requestLayout();
+            highlightSticker(ic_wipe);
         }else if (view.getId()==R.id.ic_star){
             checkId = "star";
-            ic_star.getLayoutParams().height = 200;
-            ic_star.getLayoutParams().width = 200;
-            ic_star.requestLayout();
+            highlightSticker(ic_star);
         }
     }
-    private ImageView ic_like;
-    private ImageView ic_kiss;
-    private ImageView ic_think;
-    private ImageView ic_happy;
-    private ImageView ic_wipe;
-    private ImageView ic_star;
+
     private void clearSelect() {
         ic_like .setBackgroundColor(getColor(R.color.white));
         ic_kiss .setBackgroundColor(getColor(R.color.white));
@@ -157,7 +156,31 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
 
     private String checkId = "";
 
-
+    public void updateCount(Sticker s, String sendUser){
+        if (s.getSender().equals(sendUser)){
+            switch (s.getImageId()){
+                case "like":
+                    like_cnt ++;
+                    break;
+                case "think":
+                    think_cnt++;
+                    break;
+                case "kiss":
+                    kiss_cnt++;
+                    break;
+                case "happy":
+                    happy_cnt++;
+                    break;
+                case "wipe":
+                    wipe_cnt++;
+                    break;
+                case "star" :
+                    star_cnt++;
+                    break;
+                default: Log.d(" updateCount Error: ", "No Match stickers.");
+            }
+        }
+    }
 
     private void getData(final String fromId, final String toId ){
 
@@ -166,14 +189,26 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
+                like_cnt =0;
+                kiss_cnt  =0;
+                think_cnt =0;
+                happy_cnt  =0;
+                wipe_cnt=0;
+                star_cnt = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Sticker chat = snapshot.getValue(Sticker.class);
-                    if(chat.getSender().equals(fromId) && chat.getRecipient().equals(toId) ||
-                            chat.getSender().equals(toId) && chat.getRecipient().equals(fromId)){
-                        list.add(chat);
+                    Sticker sticker = snapshot.getValue(Sticker.class);
+                    if(sticker.getSender().equals(fromId) && sticker.getRecipient().equals(toId) ||
+                            sticker.getSender().equals(toId) && sticker.getRecipient().equals(fromId)){
+                        list.add(sticker);
                     }
+                    updateCount(sticker,sender);
                 }
-
+                like_tv.setText("Like: " + like_cnt);
+                kiss_tv.setText("Kiss: " + kiss_cnt);
+                think_tv.setText("Think: " + think_cnt);
+                happy_tv.setText("Happy: " + happy_cnt);
+                wipe_tv.setText("Wipe: " + wipe_cnt);
+                star_tv.setText("Star: " + star_cnt);
                 mAdapter.notifyDataSetChanged();
 
             }
