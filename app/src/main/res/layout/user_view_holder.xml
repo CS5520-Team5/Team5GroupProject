@@ -26,7 +26,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/time"
+                app:layout_constraintBottom_toTopOf="@id/userid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
                 tools:text="@string/username" />
 
             <TextView
-                android:id="@id/time"
+                android:id="@id/userid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple_700"
@@ -43,7 +43,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/username"
                 app:layout_constraintTop_toBottomOf="@id/username"
                 tools:text="@string/userId" />
 

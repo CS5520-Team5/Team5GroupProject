@@ -24,7 +24,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="80dp"
+            android:background="#FFFFFF">
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/ic_like"
