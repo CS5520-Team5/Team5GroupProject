@@ -116,7 +116,6 @@ public class StickerActivity extends AppCompatActivity implements View.OnClickLi
 
     }
     private void highlightSticker(ImageView v){
-        v.setBackgroundColor(Color.GRAY);
         v.getLayoutParams().height = 200;
         v.getLayoutParams().width = 200;
         v.requestLayout();
