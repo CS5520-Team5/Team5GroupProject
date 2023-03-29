@@ -15,6 +15,36 @@
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileFragment"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PostFragment"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".NewsFragment"
+            android:exported="false"
+            android:label="@string/title_activity_news_fragment"
+            android:theme="@style/Theme.GroupProject.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".GameSphere.GameSphereMainPageActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Sticker.ConversationActivity"
             android:exported="false">
             <meta-data
