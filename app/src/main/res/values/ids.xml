@@ -27,4 +27,17 @@
     <!--    IDs in StickerViewHolder-->
     <item name="image" type="id" />
     <item name="text" type="id" />
+    <!--    IDs in ProfileFragment-->
+    <item name="profileImage" type="id" />
+    <item name="profileName" type="id" />
+    <item name="profileAge" type="id" />
+    <item name="profileGender" type="id" />
+    <item name="profileGames" type="id" />
+    <item name="profileNavigation" type="id" />
+    <item name="editButton" type="id" />
+    <!--    IDs in ProfileNavigation-->
+    <item name="profileNavInfo" type="id" />
+    <item name="profileNavPosts" type="id" />
+    <item name="profileNavComments" type="id" />
+
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/profileNavInfo"
+        android:icon="@drawable/spooky"
+        android:title="@string/personalInfoString" />
+
+    <item
+        android:id="@id/profileNavPosts"
+        android:icon="@drawable/programming"
+        android:title="@string/postsString" />
+
+    <item
+        android:id="@id/profileNavComments"
+        android:icon="@drawable/christmas"
+        android:title="@string/commentsString" />
+
+</menu>
