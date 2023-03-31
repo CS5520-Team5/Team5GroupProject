@@ -1,6 +1,9 @@
 package edu.northeastern.groupproject.GameSphere;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,6 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-
         newsList = new ArrayList<>();
         dataRef = FirebaseDatabase.getInstance().getReference("News");
         dataRef.addValueEventListener(new ValueEventListener() {
@@ -39,13 +41,13 @@ public class NewsActivity extends AppCompatActivity {
                     String newsDate = snapshot.child("newsDate").getValue(String.class);
                     String content = snapshot.child("content").getValue(String.class);
 
-                    List<News.Comment> commentList = new ArrayList<>();
+                    List<Comment> commentList = new ArrayList<>();
                     List<Map<String, String>> comments = (List<Map<String, String>>) snapshot.child("comments").getValue();
                     for (Map<String, String> comment : comments) {
                         String commentDate = comment.get("commentDate");
                         String commentContent = comment.get("content");
                         String commentUsername = comment.get("username");
-                        commentList.add(new News.Comment(commentUsername, commentContent, commentDate));
+                        commentList.add(new Comment(commentUsername, commentContent, commentDate));
                     }
 
                     News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
@@ -59,9 +61,24 @@ public class NewsActivity extends AppCompatActivity {
             }
         });
 
+        NewsClickListener newsClickListener = new NewsClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                List<Comment> commentList = newsList.get(position).getCommentList();
+                if (commentList.size() > 0) {
+                    Intent intent = new Intent(NewsActivity.this, CommentActivity.class);
+                    intent.putExtra("commentList", (ArrayList) commentList);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(NewsActivity.this, "There are no comments on this news.", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         newsAdapter = new NewsAdapter(newsList, this);
+        newsAdapter.setOnItemClickListener(newsClickListener);
         recyclerView.setAdapter(newsAdapter);
     }
 }
