@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
+
         <activity
             android:name=".PostAdapter"
             android:exported="false">
@@ -22,44 +23,28 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Post"
+            android:name=".GameSphere.model.Post"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".GameSphere.PostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProfileFragment"
+            android:name=".GameSphere.NewsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PostFragment"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".NewsFragment"
-            android:exported="false"
-            android:label="@string/title_activity_news_fragment"
-            android:theme="@style/Theme.GroupProject.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".GameSphere.GameSphereMainPageActivity"
+            android:name=".GameSphere.GameSphereLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
