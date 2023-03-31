@@ -29,7 +29,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/senderString" />
 
-<!--            TODO: Replace the placeholder in drawable-->
             <ImageView
                 android:id="@id/image"
                 android:layout_width="wrap_content"

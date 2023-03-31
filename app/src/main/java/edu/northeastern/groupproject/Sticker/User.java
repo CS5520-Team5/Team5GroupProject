@@ -2,8 +2,8 @@ package edu.northeastern.groupproject.Sticker;
 
 public class User {
 
-    String userName;
-    int userId;
+    private String userName;
+    private int userId;
 
     public String getName() {
         return this.userName;
