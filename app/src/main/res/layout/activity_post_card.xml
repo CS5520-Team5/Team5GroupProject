@@ -25,7 +25,7 @@
         android:onClick="@{(v) -> clickHandler.onClick(v, course.id)}">
 
         <ImageView
-            android:id="@+id/course_image"
+            android:id="@+id/post_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:contentDescription="@{course.thumbContentDesc}"/>
 
         <ImageView
-            android:id="@+id/course_add"
+            android:id="@+id/post_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,13 +47,13 @@
             android:contentDescription="add_course"/>
 
         <ImageView
-            android:id="@+id/course_instructor"
+            android:id="@+id/post_user_avatar"
             android:layout_width="38dp"
             android:layout_height="38dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/course_image"
+            app:layout_constraintTop_toBottomOf="@id/post_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/course_image"
+            app:layout_constraintBottom_toBottomOf="@id/post_image"
             android:foreground="@drawable/avatar_outline"
             app:srcUrl="@{course.instructor}"
             app:placeholder="@{@drawable/ic_avatar_placeholder}"
@@ -61,11 +61,11 @@
             android:importantForAccessibility="no"/>
 
         <TextView
-            android:id="@+id/course_subject"
+            android:id="@+id/post_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/course_instructor"
+            app:layout_constraintTop_toBottomOf="@id/post_user_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="@dimen/grid_2"
             android:gravity="center"
@@ -76,11 +76,11 @@
             tools:text="@sample/courses.json/data/subject"/>
 
         <TextView
-            android:id="@+id/course_name"
+            android:id="@+id/post_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/course_subject"
+            app:layout_constraintTop_toBottomOf="@id/post_username"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingHorizontal="@dimen/grid_2"
             android:gravity="center"
@@ -96,22 +96,22 @@
             android:orientation="vertical"/>
 
         <ImageView
-            android:id="@+id/course_icon"
+            android:id="@+id/post_like_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/course_steps"
+            app:layout_constraintTop_toTopOf="@id/post_likes"
             app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="@id/course_steps"
+            app:layout_constraintBottom_toBottomOf="@id/post_likes"
             app:srcCompat="@drawable/ic_course"
             app:tint="?attr/colorPrimary"
             android:importantForAccessibility="no"/>
 
         <TextView
-            android:id="@+id/course_steps"
+            android:id="@+id/post_likes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/course_name"
+            app:layout_constraintTop_toBottomOf="@id/post_title"
             android:paddingVertical="@dimen/grid_3"
             android:paddingStart="@dimen/grid_0_5"
             android:textColor="?attr/colorPrimary"
