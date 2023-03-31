@@ -33,11 +33,8 @@
     <item name="profileAge" type="id" />
     <item name="profileGender" type="id" />
     <item name="profileGames" type="id" />
-    <item name="profileNavigation" type="id" />
     <item name="editButton" type="id" />
-    <!--    IDs in ProfileNavigation-->
-    <item name="profileNavInfo" type="id" />
-    <item name="profileNavPosts" type="id" />
-    <item name="profileNavComments" type="id" />
+    <item name="postsButton" type="id" />
+    <item name="commentsButton" type="id" />
 
 </resources>
