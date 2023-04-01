@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import edu.northeastern.groupproject.GameSphere.model.Post;
@@ -30,7 +32,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        Post
+        Post post=postList.get(position);
+        holder.post_username.setText(post.getUsername());
+        holder.post_title.setText(post.getTitle());
+        holder.post_likes.setText(post.getNumberOfLikes());
+        Glide.with(context).load(post.getImage()).into(holder.post_image);
+        Glide.with(context).load(post.getImage()).into(holder.post_user_avatar);
     }
 
     @Override

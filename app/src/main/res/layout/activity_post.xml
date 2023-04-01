@@ -5,11 +5,11 @@
     android:id="@+id/post_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameSphere.PostFragment"
+    tools:context=".GameSphere.PostActivity"
     tools:ignore="MissingClass">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/featured_grid"
+        android:id="@+id/recycler_view_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"

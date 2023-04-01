@@ -12,6 +12,7 @@ public class Post {
     private Date postDate;
     private String title;
     private ArrayList<Comment> comments;
+    private String image;
 
 
     public class Comment{
@@ -50,15 +51,7 @@ public class Post {
         }
     }
 
-    public Post(String postId, String username, String content, int numberOfLikes, Date postDate, String title, ArrayList<Comment> comments) {
-        this.postId = postId;
-        this.username = username;
-        this.content = content;
-        this.numberOfLikes = numberOfLikes;
-        this.postDate = postDate;
-        this.title = title;
-        this.comments = comments;
-    }
+
 
     public String getPostId() {
         return postId;
@@ -114,5 +107,13 @@ public class Post {
 
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
