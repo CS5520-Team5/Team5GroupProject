@@ -27,6 +27,9 @@
     <!--    IDs in StickerViewHolder-->
     <item name="image" type="id" />
     <item name="text" type="id" />
+    <!--    IDs in HomeActivity-->
+    <item name="btnNews" type="id" />
+    <item name="btnProfile" type="id" />
     <!--    IDs in ProfileActivity-->
     <item name="profileImage" type="id" />
     <item name="profileName" type="id" />

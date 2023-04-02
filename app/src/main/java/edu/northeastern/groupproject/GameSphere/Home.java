@@ -13,6 +13,7 @@ import edu.northeastern.groupproject.WebService.WebServiceActivity;
 public class Home extends AppCompatActivity {
 
     Button btnNews;
+    Button btnProfile;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -25,6 +26,15 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnProfile = findViewById(R.id.btnProfile);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });

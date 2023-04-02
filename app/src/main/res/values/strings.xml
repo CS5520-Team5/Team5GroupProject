@@ -38,6 +38,9 @@
     <string name="previous">Previous</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--    Strings in HomeActivity-->
+    <string name="newsBtnString">News</string>
+    <string name="profileBtnString">Profile</string>
     <!--    Strings in ProfileActivity-->
     <string name="profileImageString">Profile Image</string>
     <string name="nameString">Name</string>
