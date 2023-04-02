@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
+
         <activity
             android:name=".ProfileActivity"
             android:exported="false">
@@ -22,30 +23,28 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProfileFragment"
+            android:name=".GameSphere.CommentActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PostFragment"
+            android:name=".GameSphere.Home"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".NewsFragment"
-            android:exported="false"
-            android:label="@string/title_activity_news_fragment"
-            android:theme="@style/Theme.GroupProject.NoActionBar">
+            android:name=".GameSphere.NewsActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameSphere.GameSphereMainPageActivity"
+            android:name=".GameSphere.GameSphereLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

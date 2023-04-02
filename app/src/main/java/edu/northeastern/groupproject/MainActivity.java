@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import edu.northeastern.groupproject.GameSphere.GameSphereMainPageActivity;
+import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
 import edu.northeastern.groupproject.WebService.WebServiceActivity;
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnGameSphere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GameSphereMainPageActivity.class);
+                Intent intent = new Intent(MainActivity.this, GameSphereLoginActivity.class);
                 startActivity(intent);
             }
         });
