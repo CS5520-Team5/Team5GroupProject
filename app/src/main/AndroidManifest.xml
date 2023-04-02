@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
-
+        <activity
+            android:name=".GameSphere.EditProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".GameSphere.ProfileActivity"
             android:exported="false">

@@ -50,5 +50,9 @@
     <string name="editButtonString">Edit Button</string>
     <string name="postsString">Posts</string>
     <string name="commentsString">Comments</string>
+    <!--    Strings in EditProfileActivity-->
+    <string name="updateImageString">Upload New Profile Image</string>
+    <string name="updateButtonString">Update</string>
+    <string name="cancelButtonString">Cancel</string>
 
 </resources>

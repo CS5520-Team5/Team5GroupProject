@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileImage"
-        app:layout_constraintBottom_toTopOf="@id/profileAge"/>
+        app:layout_constraintBottom_toTopOf="@id/profileAge" />
 
     <TextView
         android:id="@id/profileAge"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/commentsButton"
         app:layout_constraintTop_toBottomOf="@id/profileGames"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@id/commentsButton"
@@ -92,6 +92,6 @@
         app:layout_constraintStart_toEndOf="@id/postsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileGames"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
