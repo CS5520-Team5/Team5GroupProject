@@ -5,11 +5,11 @@
     android:id="@+id/post_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameSphere.PostActivity"
+    tools:context=".GameSphere.RoomActivity"
     tools:ignore="MissingClass">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_post"
+        android:id="@+id/recycler_view_room"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -18,9 +18,8 @@
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="@integer/featured_grid_columns"
-        app:hasFixedSize="@{true}"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        tools:listitem="@layout/activity_post_card"/>
+        tools:listitem="@layout/activity_room_card"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

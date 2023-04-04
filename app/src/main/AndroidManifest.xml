@@ -23,14 +23,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameSphere.model.Post"
+            android:name=".GameSphere.model.Room"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameSphere.PostActivity"
+            android:name=".GameSphere.RoomActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
