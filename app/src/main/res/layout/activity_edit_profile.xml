@@ -16,18 +16,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        android:src="@drawable/spooky" />
 
     <EditText
-        android:id="@id/editName"
+        android:id="@id/editUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="@string/nameString"
-        app:layout_constraintBottom_toTopOf="@id/editAge"
+        android:text="@string/usernameString"
+        app:layout_constraintBottom_toTopOf="@id/editEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editUpdateImageButton" />
+
+    <EditText
+        android:id="@id/editEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/emailString"
+        app:layout_constraintBottom_toTopOf="@id/editAge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editUsername" />
 
     <EditText
         android:id="@id/editAge"
@@ -35,21 +46,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/ageString"
-        app:layout_constraintBottom_toTopOf="@id/editGender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editName" />
-
-    <EditText
-        android:id="@id/editGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="@string/genderString"
         app:layout_constraintBottom_toTopOf="@id/editGames"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editAge" />
+        app:layout_constraintTop_toBottomOf="@id/editEmail" />
 
     <EditText
         android:id="@id/editGames"
@@ -60,7 +60,7 @@
         app:layout_constraintBottom_toTopOf="@id/editUpdateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editGender" />
+        app:layout_constraintTop_toBottomOf="@id/editAge" />
 
     <Button
         android:id="@id/editUpdateButton"
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/updateImageString"
-        app:layout_constraintBottom_toTopOf="@id/editName"
+        app:layout_constraintBottom_toTopOf="@id/editUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editImage" />
