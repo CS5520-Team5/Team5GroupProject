@@ -16,8 +16,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import edu.northeastern.groupproject.R;
 
@@ -61,26 +63,38 @@ public class ProfileActivity extends AppCompatActivity {
         usernameText.setText(username);
 
         //Update user profile information
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(username);
-        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     showToast("Failed to get profile information");
                 } else {
-                    id = Integer.valueOf(getInfo(task, "id"));
-                    name = getInfo(task, "name");
-                    String nameString = "Name: " + name;
-                    nameText.setText(nameString);
-                    age = getInfo(task, "age");
-                    String ageString = "Age: " + age;
-                    ageText.setText(ageString);
-                    email = getInfo(task, "email");
-                    String genderString = "Email: " + email;
-                    emailText.setText(genderString);
-                    games = getInfo(task, "games");
-                    String gamesString = "Games: " + games;
-                    gamesText.setText(gamesString);
+                    id = task.getResult().child("id").getValue(Integer.class);
+                    // Register a listener to read data from newest update in database
+                    ValueEventListener profileListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            name = snapshot.child("name").getValue(String.class);
+                            String nameString = "Name: " + name;
+                            nameText.setText(nameString);
+                            email = snapshot.child("email").getValue(String.class);
+                            String emailString = "Email: " + email;
+                            emailText.setText(emailString);
+                            age = snapshot.child("age").getValue(String.class);
+                            String ageString = "Age: " + age;
+                            ageText.setText(ageString);
+                            games = snapshot.child("games").getValue(String.class);
+                            String gamesString = "Games: " + games;
+                            gamesText.setText(gamesString);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            showToast("Failed to get updated profile information");
+                        }
+                    };
+                    databaseReference.child(username).addValueEventListener(profileListener);
                 }
             }
         });
@@ -101,17 +115,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    // Get profile information
-    private String getInfo(Task<DataSnapshot> task, String fieldName) {
-        String result = "";
-        Object infoObject = task.getResult().child(fieldName).getValue();
-        // Check if infoObject contains this field
-        if (infoObject != null) {
-            result = result + infoObject;
-        }
-        return result;
     }
 
     // Display a toast with message
