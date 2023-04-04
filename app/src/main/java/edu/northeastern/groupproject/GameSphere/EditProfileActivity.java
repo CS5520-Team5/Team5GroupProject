@@ -3,6 +3,7 @@ package edu.northeastern.groupproject.GameSphere;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import edu.northeastern.groupproject.R;
 
@@ -30,6 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String age;
     private String email;
     private String games;
+    private Integer id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,6 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         updateButton = findViewById(R.id.editUpdateButton);
-        cancelButton = findViewById(R.id.editCancelButton);
         updateImageButton = findViewById(R.id.editUpdateImageButton);
         editUsername = findViewById(R.id.editUsername);
         editEmail = findViewById(R.id.editEmail);
@@ -51,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
         email = bundle.getString("email");
         age = bundle.getString("age");
         games = bundle.getString("games");
+        id = bundle.getInt("id");
         // Initialize default information
         editUsername.setText(username);
         editEmail.setText(email);
@@ -61,15 +65,11 @@ public class EditProfileActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
-        });
-
-        // Register onClickListener to cancel button
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
+                if (isUpdated()) {
+                    onBackPressed();
+                } else {
+                    showToast("Please provide new profile information");
+                }
             }
         });
 
@@ -85,7 +85,20 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        showDialog();
+        if (isUpdated()) {
+            showDialog();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private boolean isUpdated() {
+        String currUsername = editUsername.getText().toString();
+        String currEmail = editEmail.getText().toString();
+        String currAge = editAge.getText().toString();
+        String currGames = editGames.getText().toString();
+        return !currUsername.equals(username) || !currEmail.equals(email)
+                || !currAge.equals(age) || !currGames.equals(games);
     }
 
     // Show a dialog asking the user if they want to terminate the search
@@ -104,5 +117,12 @@ public class EditProfileActivity extends AppCompatActivity {
         builder.setNegativeButton("No", null);
         // Show the dialog
         builder.show();
+    }
+
+    // Display a toast with message
+    private void showToast(String msg) {
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

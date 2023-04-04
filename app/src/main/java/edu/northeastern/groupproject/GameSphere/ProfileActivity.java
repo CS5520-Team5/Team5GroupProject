@@ -35,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String age;
     private String email;
     private String games;
+    private Integer id;
 
     // TODO: Implement profile image display
 
@@ -65,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     showToast("Failed to get profile information");
                 } else {
+                    id = Integer.valueOf(getInfo(task, "id"));
                     age = getInfo(task, "age");
                     String ageString = "Age: " + age;
                     ageText.setText(ageString);
@@ -84,6 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("id", id);
                 bundle.putString("username", username);
                 bundle.putString("age", age);
                 bundle.putString("email", email);
