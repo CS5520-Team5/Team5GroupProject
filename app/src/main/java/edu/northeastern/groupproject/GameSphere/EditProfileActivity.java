@@ -28,6 +28,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editEmail;
     private EditText editGames;
     private ImageView profileImage;
+    private String username;
     private String name;
     private String age;
     private String email;
@@ -49,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Get information from bundle
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
+        username = bundle.getString("username");
         name = bundle.getString("name");
         email = bundle.getString("email");
         age = bundle.getString("age");
@@ -59,12 +61,25 @@ public class EditProfileActivity extends AppCompatActivity {
         editEmail.setText(email);
         editAge.setText(age);
         editGames.setText(games);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // Register onClickListener to update button
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isUpdated()) {
+                    String currName = editName.getText().toString();
+                    String currEmail = editEmail.getText().toString();
+                    String currAge = editAge.getText().toString();
+                    String currGames = editGames.getText().toString();
+                    databaseReference.child("User").child(username).child("name").setValue(currName);
+                    databaseReference.child("User").child(username).child("email").setValue(currEmail);
+                    databaseReference.child("User").child(username).child("age").setValue(currAge);
+                    databaseReference.child("User").child(username).child("games").setValue(currGames);
+                    name = currName;
+                    email = currEmail;
+                    age = currAge;
+                    games = currGames;
                     onBackPressed();
                 } else {
                     showToast("Please provide new profile information");
