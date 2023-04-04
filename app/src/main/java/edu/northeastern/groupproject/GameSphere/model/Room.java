@@ -1,18 +1,18 @@
 package edu.northeastern.groupproject.GameSphere.model;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Room {
     private String roomId;
     private String image;
     private String roomDescription;
     private String roomName;
-    private ArrayList<String> members;
-    private Integer time;
+    private List<String> members;
+    private Long time;
     private String admin;
 
-    public Room(String roomId, String image, String roomDescription, String roomName, ArrayList<String> members, Integer time, String admin) {
+    public Room(String roomId, String image, String roomDescription, String roomName, List<String> members, Long time, String admin) {
         this.roomId = roomId;
         this.image = image;
         this.roomDescription = roomDescription;
@@ -54,19 +54,40 @@ public class Room {
         this.roomName = roomName;
     }
 
-    public ArrayList<String> getMembers() {
+    public List<String> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<String> members) {
+    public void setMembers(List<String> members) {
         this.members = members;
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId='" + roomId + '\'' +
+                ", image='" + image + '\'' +
+                ", roomDescription='" + roomDescription + '\'' +
+                ", roomName='" + roomName + '\'' +
+                ", members=" + members +
+                ", time=" + time +
+                ", admin='" + admin + '\'' +
+                '}';
     }
 }

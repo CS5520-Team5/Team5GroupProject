@@ -12,8 +12,7 @@ import edu.northeastern.groupproject.WebService.WebServiceActivity;
 
 public class Home extends AppCompatActivity {
 
-    Button btnNews;
-    Button btnRooms;
+    Button btnNews,btnRooms;
 
     @SuppressLint("MissingInflatedId")
     @Override

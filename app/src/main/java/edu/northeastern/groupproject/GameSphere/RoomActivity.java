@@ -4,18 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import edu.northeastern.groupproject.GameSphere.adapter.RoomAdapter;
 import edu.northeastern.groupproject.GameSphere.model.Room;
@@ -31,6 +33,12 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         roomList =new ArrayList<>();
+        recyclerView=findViewById(R.id.recycler_view_room);
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        roomAdapter=new RoomAdapter(roomList,this);
+        Log.i("hahaha",roomAdapter.getItemCount()+" count");
+        recyclerView.setAdapter(roomAdapter);
+
         dataRef= FirebaseDatabase.getInstance().getReference("Rooms");
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -41,13 +49,14 @@ public class RoomActivity extends AppCompatActivity {
                     String admin=snapshot.child("admin").getValue(String.class);
                     String roomDescription=snapshot.child("roomDescription").getValue(String.class);
                     String roomName=snapshot.child("roomName").getValue(String.class);
-                    Integer time=snapshot.child("time").getValue(Integer.class);
+                    Long time=snapshot.child("time").getValue(Long.class);
 
-                    ArrayList<String> members = snapshot.child("members").getValue(ArrayList.class);
+                    List<String> members = snapshot.child("members").getValue(new GenericTypeIndicator<List<String>>(){});
                     Room room=new Room(roomId,image,roomDescription,roomName,members,time,admin);
                     roomList.add(room);
                 }
                 roomAdapter.notifyDataSetChanged();
+                Log.i("hahaha",roomList.toString());
             }
 
             @Override
@@ -55,9 +64,6 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView.findViewById(R.id.recycler_view_room);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        roomAdapter=new RoomAdapter(roomList,this);
-        recyclerView.setAdapter(roomAdapter);
+
     }
 }

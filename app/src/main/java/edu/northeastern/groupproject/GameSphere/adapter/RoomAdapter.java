@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import java.util.List;
 import edu.northeastern.groupproject.GameSphere.model.Room;
 import edu.northeastern.groupproject.R;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private List<Room> roomList;
     private Context context;
 
@@ -28,33 +29,34 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public RoomAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.activity_room_card,parent,false);
-        return new ViewHolder(view);
+    public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new RoomViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_room_card,null));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RoomAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room= roomList.get(position);
-        holder.room_name.setText(room.getRoomName());
-        holder.room_desc.setText(room.getRoomDescription());
-        holder.room_num.setText(room.getMembers().size());
-        Glide.with(context).load(room.getImage()).into(holder.room_image);
+        Log.i("hahaha", room.toString());
+        holder.room_name.setText(String.valueOf(room.getRoomName()));
+        holder.room_desc.setText(String.valueOf(room.getRoomDescription()));
+        holder.room_num.setText(String.valueOf(room.getMembers().size()));
+//        Glide.with(context).load(room.getImage()).into(holder.room_image);
+        Log.i("hahaha",holder.toString());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return roomList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class RoomViewHolder extends RecyclerView.ViewHolder{
         private ImageView room_image;
         private ImageView admin_user_avatar;
         private TextView room_name;
         private TextView room_desc;
         private TextView room_num;
 
-        public ViewHolder(@NonNull View itemView) {
+        public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             room_image=itemView.findViewById(R.id.room_image);
             admin_user_avatar=itemView.findViewById(R.id.admin_user_avatar);
@@ -62,5 +64,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             room_desc=itemView.findViewById(R.id.room_desc);
             room_num=itemView.findViewById(R.id.room_num);
         }
+
     }
 }
