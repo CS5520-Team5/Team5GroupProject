@@ -23,9 +23,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/usernameString"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileImage"
+        app:layout_constraintBottom_toTopOf="@id/profileName" />
+
+    <TextView
+        android:id="@id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nameString"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileUsername"
         app:layout_constraintBottom_toTopOf="@id/profileEmail" />
 
     <TextView
@@ -35,7 +46,7 @@
         android:text="@string/emailString"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileUsername"
+        app:layout_constraintTop_toBottomOf="@id/profileName"
         app:layout_constraintBottom_toTopOf="@id/profileAge" />
 
     <TextView

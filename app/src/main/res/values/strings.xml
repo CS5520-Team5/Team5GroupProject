@@ -44,6 +44,7 @@
     <!--    Strings in ProfileActivity-->
     <string name="profileImageString">Profile Image</string>
     <string name="usernameString">Username</string>
+    <string name="nameString">Name</string>
     <string name="ageString">Age</string>
     <string name="emailString">Email</string>
     <string name="gamesString">Games</string>
@@ -53,6 +54,5 @@
     <!--    Strings in EditProfileActivity-->
     <string name="updateImageString">Upload New Profile Image</string>
     <string name="updateButtonString">Update</string>
-    <string name="cancelButtonString">Cancel</string>
 
 </resources>

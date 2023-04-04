@@ -22,14 +22,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private Button updateButton;
-    private Button cancelButton;
     private Button updateImageButton;
-    private EditText editUsername;
+    private EditText editName;
     private EditText editAge;
     private EditText editEmail;
     private EditText editGames;
     private ImageView profileImage;
-    private String username;
+    private String name;
     private String age;
     private String email;
     private String games;
@@ -42,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         updateButton = findViewById(R.id.editUpdateButton);
         updateImageButton = findViewById(R.id.editUpdateImageButton);
-        editUsername = findViewById(R.id.editUsername);
+        editName = findViewById(R.id.editName);
         editEmail = findViewById(R.id.editEmail);
         editAge = findViewById(R.id.editAge);
         editGames = findViewById(R.id.editGames);
@@ -50,13 +49,13 @@ public class EditProfileActivity extends AppCompatActivity {
         // Get information from bundle
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
-        username = bundle.getString("username");
+        name = bundle.getString("name");
         email = bundle.getString("email");
         age = bundle.getString("age");
         games = bundle.getString("games");
         id = bundle.getInt("id");
         // Initialize default information
-        editUsername.setText(username);
+        editName.setText(name);
         editEmail.setText(email);
         editAge.setText(age);
         editGames.setText(games);
@@ -93,11 +92,11 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private boolean isUpdated() {
-        String currUsername = editUsername.getText().toString();
+        String currName = editName.getText().toString();
         String currEmail = editEmail.getText().toString();
         String currAge = editAge.getText().toString();
         String currGames = editGames.getText().toString();
-        return !currUsername.equals(username) || !currEmail.equals(email)
+        return !currName.equals(name) || !currEmail.equals(email)
                 || !currAge.equals(age) || !currGames.equals(games);
     }
 

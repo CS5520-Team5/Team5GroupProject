@@ -33,6 +33,7 @@
     <!--    IDs in ProfileActivity-->
     <item name="profileImage" type="id" />
     <item name="profileUsername" type="id" />
+    <item name="profileName" type="id" />
     <item name="profileAge" type="id" />
     <item name="profileEmail" type="id" />
     <item name="profileGames" type="id" />
@@ -41,12 +42,11 @@
     <item name="commentsButton" type="id" />
     <!--    IDs in EditProfileActivity-->
     <item name="editImage" type="id" />
-    <item name="editUsername" type="id" />
+    <item name="editName" type="id" />
     <item name="editAge" type="id" />
     <item name="editEmail" type="id" />
     <item name="editGames" type="id" />
     <item name="editUpdateButton" type="id" />
-    <item name="editCancelButton" type="id" />
     <item name="editUpdateImageButton" type="id" />
 
 </resources>

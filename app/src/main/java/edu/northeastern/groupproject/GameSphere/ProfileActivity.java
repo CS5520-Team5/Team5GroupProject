@@ -26,12 +26,14 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private ImageButton btnEdit;
     private TextView usernameText;
+    private TextView nameText;
     private TextView ageText;
     private TextView emailText;
     private TextView gamesText;
     private ImageView profileImage;
     private SharedPreferences sharedPreferences;
     private String username;
+    private String name;
     private String age;
     private String email;
     private String games;
@@ -46,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         btnEdit = (ImageButton) findViewById(R.id.editButton);
         usernameText = findViewById(R.id.profileUsername);
+        nameText = findViewById(R.id.profileName);
         ageText = findViewById(R.id.profileAge);
         emailText = findViewById(R.id.profileEmail);
         gamesText = findViewById(R.id.profileGames);
@@ -55,8 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Update username
         username = sharedPreferences.getString("name", "");
-        String usernameString = "Username: " + username;
-        usernameText.setText(usernameString);
+        usernameText.setText(username);
 
         //Update user profile information
         databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(username);
@@ -67,6 +69,9 @@ public class ProfileActivity extends AppCompatActivity {
                     showToast("Failed to get profile information");
                 } else {
                     id = Integer.valueOf(getInfo(task, "id"));
+                    name = getInfo(task, "name");
+                    String nameString = "Name: " + name;
+                    nameText.setText(nameString);
                     age = getInfo(task, "age");
                     String ageString = "Age: " + age;
                     ageText.setText(ageString);
@@ -88,6 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", id);
                 bundle.putString("username", username);
+                bundle.putString("name", name);
                 bundle.putString("age", age);
                 bundle.putString("email", email);
                 bundle.putString("games", games);
