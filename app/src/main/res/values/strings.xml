@@ -43,10 +43,10 @@
     <string name="profileBtnString">Profile</string>
     <!--    Strings in ProfileActivity-->
     <string name="profileImageString">Profile Image</string>
-    <string name="usernameString">Username: </string>
-    <string name="ageString">Age: </string>
-    <string name="emailString">Email: </string>
-    <string name="gamesString">Games: </string>
+    <string name="usernameString">Username</string>
+    <string name="ageString">Age</string>
+    <string name="emailString">Email</string>
+    <string name="gamesString">Games</string>
     <string name="editButtonString">Edit Button</string>
     <string name="postsString">Posts</string>
     <string name="commentsString">Comments</string>

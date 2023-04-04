@@ -36,6 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     private String email;
     private String games;
 
+    // TODO: Implement profile image display
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
