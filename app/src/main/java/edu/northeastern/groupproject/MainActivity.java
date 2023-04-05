@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
+import edu.northeastern.groupproject.GameSphere.RoomActivity;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
 import edu.northeastern.groupproject.WebService.WebServiceActivity;
 import edu.northeastern.groupproject.GameSphere.Home;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println("clicked bypass");
                 Log.i("MyApp","clicked bypass");
-                Intent intent = new Intent(MainActivity.this, Home.class);
+                Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 startActivity(intent);
             }
         });

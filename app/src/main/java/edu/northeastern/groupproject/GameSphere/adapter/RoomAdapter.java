@@ -15,16 +15,21 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import edu.northeastern.groupproject.GameSphere.RoomClickListener;
 import edu.northeastern.groupproject.GameSphere.model.Room;
 import edu.northeastern.groupproject.R;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private List<Room> roomList;
     private Context context;
+    private RoomClickListener roomClickListener;
 
     public RoomAdapter(List<Room> roomList, Context context) {
         this.roomList = roomList;
         this.context = context;
+    }
+    public void setOnItemClickListener(RoomClickListener roomClickListener) {
+        this.roomClickListener = roomClickListener;
     }
 
     @NonNull
@@ -35,13 +40,22 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
+        int position_saved=position;
         Room room= roomList.get(position);
-        Log.i("hahaha", room.toString());
+        Log.i("room", room.toString());
         holder.room_name.setText(String.valueOf(room.getRoomName()));
         holder.room_desc.setText(String.valueOf(room.getRoomDescription()));
         holder.room_num.setText(String.valueOf(room.getMembers().size()));
-//        Glide.with(context).load(room.getImage()).into(holder.room_image);
-        Log.i("hahaha",holder.toString());
+        Glide.with(context).load(String.valueOf(room.getImage())).centerCrop().into(holder.room_image);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(roomClickListener!=null){
+                    roomClickListener.onItemClick(position_saved);
+                }
+            }
+        });
+
     }
 
     @Override

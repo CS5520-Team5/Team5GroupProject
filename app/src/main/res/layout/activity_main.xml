@@ -60,7 +60,7 @@
         android:id="@+id/btnGameHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By pass login, go straight to GameSphere"
+        android:text="By pass login, go straight to Game Room"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
