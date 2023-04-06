@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         int position_saved=position;
         Room room= roomList.get(position);
-        Log.i("room", room.toString());
         holder.room_name.setText(String.valueOf(room.getRoomName()));
         holder.room_desc.setText(String.valueOf(room.getRoomDescription()));
         holder.room_num.setText(String.valueOf(room.getMembers().size()));

@@ -2,15 +2,14 @@ package edu.northeastern.groupproject.GameSphere;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,7 +91,7 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        btnAddRoom.findViewById(R.id.btn_add_room);
+        btnAddRoom=findViewById(R.id.btn_add_room);
     }
 
 }
