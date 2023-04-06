@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.wear.tiles:tiles-material:1.1.0-alpha04'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -49,6 +50,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.2.0'
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
     // Add dependency for glide
