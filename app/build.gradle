@@ -53,5 +53,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     // Add dependency for glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 }
