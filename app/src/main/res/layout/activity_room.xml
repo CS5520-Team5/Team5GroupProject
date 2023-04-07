@@ -28,7 +28,7 @@
         app:spanCount="@integer/featured_grid_columns"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        tools:listitem="@layout/activity_room_card"/>
+        tools:listitem="@layout/recycler_room_item"/>
 
     <ImageView
         android:id="@+id/btn_add_room"

@@ -9,8 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +29,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MessageAdapter.MessageViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_message_item,null));
+        return new MessageAdapter.MessageViewHolder(LayoutInflater.from(context).inflate(R.layout.recycler_message_item,null));
     }
 
     @Override

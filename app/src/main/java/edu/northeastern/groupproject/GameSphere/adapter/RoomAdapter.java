@@ -34,7 +34,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     @NonNull
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RoomViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_room_card,null));
+        return new RoomViewHolder(LayoutInflater.from(context).inflate(R.layout.recycler_room_item,null));
     }
 
     @Override

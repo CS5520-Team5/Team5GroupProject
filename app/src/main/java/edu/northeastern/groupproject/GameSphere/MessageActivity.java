@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +18,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.northeastern.groupproject.GameSphere.adapter.MessageAdapter;
@@ -24,7 +27,8 @@ import edu.northeastern.groupproject.R;
 
 public class MessageActivity extends AppCompatActivity {
     private String roomId;
-    private RecyclerView recyclerView;
+    private static String sender="";
+    private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
     private DatabaseReference dataRef;
@@ -58,9 +62,25 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView=findViewById(R.id.message_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Message Recycler View
+        messageRecyclerView =findViewById(R.id.message_list);
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter(messageList,this);
-        recyclerView.setAdapter(messageAdapter);
+        messageRecyclerView.setAdapter(messageAdapter);
+        // communication
+        SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
+        sender=sp.getString("name","");
+    }
+    private void sendMessage(String msg) {
+        if (TextUtils.isEmpty(msg)){
+            return;
+        }
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender", sender);
+        hashMap.put("content", msg);
+        hashMap.put("roomId", roomId);
+        hashMap.put("time", System.currentTimeMillis());
+        dataRef.child("MessageHistory").push().setValue(hashMap);
+
     }
 }
