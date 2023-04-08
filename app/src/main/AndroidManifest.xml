@@ -17,14 +17,6 @@
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
-            android:name=".GameSphere.MessageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-=======
             android:name=".Loginregister.Register"
             android:exported="false" />
         <activity
@@ -50,16 +42,8 @@
 <!--            android:name=".FirebaseAuth.Register"-->
 <!--            android:exported="false"-->
 <!--            android:theme="@style/Theme.GroupProject.NoActionBar" />-->
->>>>>>> main
         <activity
             android:name=".GameSphere.CommentActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".GameSphere.RoomActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

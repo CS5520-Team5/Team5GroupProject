@@ -54,22 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="GameSphere"
-        app:layout_constraintBottom_toTopOf="@id/btnGameHome"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSendASticker" />
-
-    <Button
-        android:id="@+id/btnGameHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="By pass login, go straight to Game Room"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGameSphere" />
-
     <TextView
         android:id="@+id/user_details"
         android:layout_width="wrap_content"
@@ -87,7 +76,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGameSphere"
         app:layout_constraintVertical_bias="0.407" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
