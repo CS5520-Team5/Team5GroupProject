@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import edu.northeastern.groupproject.FirebaseAuth.Login;
 import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
 import edu.northeastern.groupproject.GameSphere.RoomActivity;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
@@ -18,6 +23,11 @@ import edu.northeastern.groupproject.GameSphere.Home;
 public class MainActivity extends AppCompatActivity {
 
     Button btnWebService, btnAboutUs, btnSendASticker, btnGameSphere,btnGameHome;
+
+    FirebaseAuth auth;
+    Button button;
+    TextView textView;
+    FirebaseUser user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         btnGameHome = findViewById(R.id.btnGameHome);
         btnGameHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +83,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        auth = FirebaseAuth.getInstance();
+        button = findViewById(R.id.logout);
+        textView = findViewById(R.id.user_details);
+        user = auth.getCurrentUser();
+        if (user == null){
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            textView.setText(user.getEmail());
+        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 }
