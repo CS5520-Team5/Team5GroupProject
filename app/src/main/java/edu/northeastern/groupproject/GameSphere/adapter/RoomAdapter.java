@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private RoomClickListener roomClickListener;
 
     public RoomAdapter(List<Room> roomList, Context context) {
+//        Log.v("roomList",roomList.toString());
         this.roomList = roomList;
         this.context = context;
     }

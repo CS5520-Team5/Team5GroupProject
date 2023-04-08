@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,11 +27,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,29 +64,7 @@ public class RoomActivity extends AppCompatActivity {
         currentUser=sp.getString("name","");
 
         dataRef= FirebaseDatabase.getInstance().getReference("Rooms");
-        dataRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String roomId = snapshot.child("roomId").getValue(String.class);
-                    String image=snapshot.child("image").getValue(String.class);
-                    String admin=snapshot.child("admin").getValue(String.class);
-                    String roomDescription=snapshot.child("roomDescription").getValue(String.class);
-                    String roomName=snapshot.child("roomName").getValue(String.class);
-                    Long time=snapshot.child("time").getValue(Long.class);
-
-                    List<String> members = snapshot.child("members").getValue(new GenericTypeIndicator<List<String>>(){});
-                    Room room=new Room(roomId,image,roomDescription,roomName,members,time,admin);
-                    roomList.add(room);
-                }
-                roomAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        getFullData();
         RoomClickListener roomClickListener=new RoomClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -103,6 +84,12 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Handle search query submission
+                if(query.length()<=1){
+                    getFullData();
+                }else{
+                    getQueryData(query);
+                }
+
                 return false;
             }
 
@@ -117,49 +104,121 @@ public class RoomActivity extends AppCompatActivity {
         btnAddRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog addDialog=new Dialog(RoomActivity.this);
-                addDialog.setContentView(R.layout.dialog_add_room);
-
-                EditText addRoomName=addDialog.findViewById(R.id.add_room_name);
-                ImageView addRoomImage=addDialog.findViewById(R.id.add_room_image);
-                Button btnAddRoomImage=addDialog.findViewById(R.id.btn_add_room_image);
-                EditText addRoomDesc=addDialog.findViewById(R.id.add_room_description);
-
-                Button btnAddSave=addDialog.findViewById(R.id.btn_add_save);
-                Button btnAddCancel=addDialog.findViewById(R.id.btn_add_cancel);
-
-                btnAddRoomImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // TODO: upload picture
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        photoLauncher.launch(intent);
-                    }
-                });
-
-                btnAddSave.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View view) {
-                        HashMap<String,Object> hashMap=new HashMap<>();
-                        hashMap.put("admin",currentUser);
-                        String image=""; //TODO: store image into firestore
-                        hashMap.put("members",new ArrayList<String>());
-                        hashMap.put("roomDesc",addRoomDesc.getText().toString());
-                        hashMap.put("roomName",addRoomName.getText().toString());
-                        hashMap.put("time",System.currentTimeMillis());
-                        String roomId=dataRef.push().getKey();
-                        hashMap.put("roomId",roomId);
-                        dataRef.child(roomId).setValue(hashMap);
-                    }
-                });
-
-                addDialog.show();
+                addNewRoom();
             }
         });
     }
+
+    private Room createRoomFromData(DataSnapshot snapshot ){
+        String roomId = snapshot.child("roomId").getValue(String.class);
+        String image=snapshot.child("image").getValue(String.class);
+        String admin=snapshot.child("admin").getValue(String.class);
+        String roomDescription=snapshot.child("roomDescription").getValue(String.class);
+        String roomName=snapshot.child("roomName").getValue(String.class);
+        Long time=snapshot.child("time").getValue(Long.class);
+
+        List<String> members = snapshot.child("members").getValue(new GenericTypeIndicator<List<String>>(){});
+        Room room=new Room(roomId,image,roomDescription,roomName,members,time,admin);
+        return room;
+    }
+
+    private void addNewRoom(){
+        Dialog addDialog=new Dialog(RoomActivity.this);
+        addDialog.setContentView(R.layout.dialog_add_room);
+
+        EditText addRoomName=addDialog.findViewById(R.id.add_room_name);
+        ImageView addRoomImage=addDialog.findViewById(R.id.add_room_image);
+        Button btnAddRoomImage=addDialog.findViewById(R.id.btn_add_room_image);
+        EditText addRoomDesc=addDialog.findViewById(R.id.add_room_description);
+
+        Button btnAddSave=addDialog.findViewById(R.id.btn_add_save);
+        Button btnAddCancel=addDialog.findViewById(R.id.btn_add_cancel);
+
+        btnAddRoomImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: upload picture
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                photoLauncher.launch(intent);
+            }
+        });
+
+        btnAddSave.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                HashMap<String,Object> hashMap=new HashMap<>();
+                hashMap.put("admin",currentUser);
+                String image="https://firebasestorage.googleapis.com/v0/b/team5-9cb36.appspot.com/o/RoomImage%2FSuper-Mario-Run-main_tcm25-454905_tcm32-455660.jpg?alt=media&token=b045c1fb-3741-49f9-8968-d397a442bd33"; //TODO: store image into firestore
+                hashMap.put("image",image);
+                hashMap.put("members",new ArrayList<String>());
+                hashMap.put("roomDescription",addRoomDesc.getText().toString());
+                hashMap.put("roomName",addRoomName.getText().toString());
+                hashMap.put("time",System.currentTimeMillis());
+                ArrayList<String> members=new ArrayList<>();
+                members.add(currentUser);
+                hashMap.put("members",members);
+                String roomId=dataRef.push().getKey();
+                hashMap.put("roomId",roomId);
+                dataRef.child(roomId).setValue(hashMap);
+                // TODO: initialize messageRoom
+                addDialog.dismiss();
+            }
+        });
+        btnAddCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addDialog.dismiss();
+            }
+        });
+
+        addDialog.show();
+
+    }
+    private void getFullData(){
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                roomList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Room room=createRoomFromData(snapshot);
+//                    Log.v("room",room.toString());
+                    roomList.add(room);
+//                    Log.v("roomList",roomList.size()+"rooms");
+                }
+                roomAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void getQueryData(String keyword) {
+        Log.v("get query data","start");
+        Query query = dataRef.orderByChild("roomName").equalTo(keyword);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshots) {
+                roomList.clear();
+                for (DataSnapshot dataSnapshot : dataSnapshots.getChildren()) {
+                    Room room=createRoomFromData(dataSnapshot);
+                    Log.v("room",room.toString());
+                    roomList.add(room);
+                }
+                roomAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+    }
+
     // Create an instance of the ActivityResultLauncher to handle the photo request
     private ActivityResultLauncher<Intent> photoLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),

@@ -10,25 +10,26 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/room_search"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        android:background="@color/lightgrey"
+        android:padding="@dimen/grid_1_5"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_room"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/room_search"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:paddingHorizontal="@dimen/grid_1_5"
-        android:paddingVertical="@dimen/grid_1_5"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:spanCount="@integer/featured_grid_columns"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/grid_1"
+        android:clipToPadding="true"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        tools:listitem="@layout/recycler_room_item"/>
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/room_search"
+        app:spanCount="@integer/featured_grid_columns"
+        tools:listitem="@layout/recycler_room_item" />
 
     <ImageView
         android:id="@+id/btn_add_room"

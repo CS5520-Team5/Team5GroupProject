@@ -6,22 +6,20 @@
         android:id="@+id/featured_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/grid_3"
+        android:layout_margin="@dimen/grid_0_5"
         android:foreground="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/room_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/grid_0_5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="4:3"
             android:scaleType="centerCrop"
             android:contentDescription="thumbContentDesc"/>
-
-
-
         <ImageView
             android:id="@+id/admin_user_avatar"
             android:layout_width="38dp"
