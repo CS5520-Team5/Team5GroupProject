@@ -19,6 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import edu.northeastern.groupproject.R;
 
 public class Register extends AppCompatActivity {
+
+    //get global variables
+//    Globals g = (Globals)getApplication();
+//    int data = g.getData();
     //create object of DatabaseReference class to access firebase's Realtime Database
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://team5-9cb36-default-rtdb.firebaseio.com/");
 
@@ -69,6 +73,8 @@ public class Register extends AppCompatActivity {
                                 databaseReference.child("users").child(phoneTxt).child("fullname").setValue(fullnameTxt);
                                 databaseReference.child("users").child(phoneTxt).child("email").setValue(emailTxt);
                                 databaseReference.child("users").child(phoneTxt).child("password").setValue(passwordTxt);
+//                                databaseReference.child("users").child(phoneTxt).child("key").setValue(data);
+
 
                                 //show a success message then finish the activity
                                 Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_SHORT).show();
