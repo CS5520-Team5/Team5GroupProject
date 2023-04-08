@@ -2,12 +2,21 @@ package edu.northeastern.groupproject.GameSphere;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 import edu.northeastern.groupproject.R;
 
@@ -16,6 +25,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     private List<News> newsList;
     private Context context;
     private NewsClickListener newsClickListener;
+    DatabaseReference newsDBRef;
 
     public NewsAdapter(List<News> newsList, Context context) {
         this.newsList = newsList;
@@ -39,7 +49,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         holder.titleTextView.setText(String.valueOf(news.getTitle()));
         holder.contentTextView.setText(String.valueOf(news.getContent()));
         holder.dateTextView.setText(String.valueOf(news.getNewsDate()));
-        holder.likesTextView.setText("Likes: " + String.valueOf(news.getNumberOfLikes()));
+        holder.btnLikes.setText(String.valueOf(news.getNumberOfLikes()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +59,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 }
             }
         });
+
+        final int[] curLikes = {Math.toIntExact(news.getNumberOfLikes())};
+        newsDBRef = FirebaseDatabase.getInstance().getReference("News");
+        holder.itemView.findViewById(R.id.newsLikesButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curLikes[0]++;
+                newsDBRef.child("news" + news.getNewsId()).child("numberOfLikes").setValue(curLikes[0]);
+                holder.btnLikes.setText(String.valueOf(news.getNumberOfLikes()) + 1);
+            }
+        });
+
+
     }
 
     @Override

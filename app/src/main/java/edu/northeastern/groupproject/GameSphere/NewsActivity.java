@@ -51,8 +51,7 @@ public class NewsActivity extends AppCompatActivity {
                     String content = snapshot.child("content").getValue(String.class);
 
                     List<Comment> commentList = new ArrayList<>();
-
-                    if(snapshot.hasChild("comments")){
+                    if (snapshot.hasChild("comments")) {
                         Map<String, Map<String, String>> comments = (Map<String, Map<String, String>>) snapshot.child("comments").getValue();
                         for (String comment : comments.keySet()) {
                             String commentDate = comments.get(comment).get("commentDate");
@@ -64,9 +63,7 @@ public class NewsActivity extends AppCompatActivity {
                     }
                     News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
                     newsList.add(news);
-
                     }
-
 
                 newsAdapter.notifyDataSetChanged();
             }
@@ -80,16 +77,6 @@ public class NewsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 List<Comment> commentList = newsList.get(position).getCommentList();
-//                if (commentList.size() > 0) {
-//                    SharedPreferences sharedPreferences = getSharedPreferences("newsInfo", MODE_PRIVATE);
-//                    sharedPreferences.edit().putString("newsIndex", String.valueOf(position)).apply();
-//                    sharedPreferences.edit().putString("commentIndex", String.valueOf(commentList.size())).apply();
-//                    Intent intent = new Intent(NewsActivity.this, CommentActivity.class);
-//                    intent.putExtra("commentList", (ArrayList) commentList);
-//                    startActivity(intent);
-//                } else {
-//                    Toast.makeText(NewsActivity.this, "There are no comments on this news.", Toast.LENGTH_LONG).show();
-//                }
                     SharedPreferences sharedPreferences = getSharedPreferences("newsInfo", MODE_PRIVATE);
                     sharedPreferences.edit().putString("newsIndex", String.valueOf(position)).apply();
                     sharedPreferences.edit().putString("commentIndex", String.valueOf(commentList.size())).apply();
@@ -111,7 +98,6 @@ public class NewsActivity extends AppCompatActivity {
         floatingActionButton.setVisibility(View.INVISIBLE);
         locationSwitch.setVisibility(View.INVISIBLE);
         postButton.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
