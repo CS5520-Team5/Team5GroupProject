@@ -1,10 +1,12 @@
 package edu.northeastern.groupproject.GameSphere.model;
 
-public class User {
+public class Member {
+    private String key;
     private String username;
     private String image;
 
-    public User(String username, String image) {
+    public Member(String key, String username, String image) {
+        this.key = key;
         this.username = username;
         this.image = image;
     }
@@ -23,5 +25,13 @@ public class User {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

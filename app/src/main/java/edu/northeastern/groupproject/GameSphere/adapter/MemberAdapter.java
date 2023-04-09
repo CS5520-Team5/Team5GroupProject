@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.northeastern.groupproject.GameSphere.model.User;
+import edu.northeastern.groupproject.GameSphere.model.Member;
 import edu.northeastern.groupproject.R;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-    private List<User> userList;
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHolder> {
+    private List<Member> memberList;
     private Context context;
 
     @NonNull
@@ -27,13 +27,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user=userList.get(position);
+        Member member = memberList.get(position);
         // TODO: bind
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return memberList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
