@@ -51,6 +51,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         holder.dateTextView.setText(String.valueOf(news.getNewsDate()));
         holder.btnLikes.setText(String.valueOf(news.getNumberOfLikes()));
 
+
+
+        final int[] curLikes = {Math.toIntExact(news.getNumberOfLikes())};
+        newsDBRef = FirebaseDatabase.getInstance().getReference("News");
+        holder.btnLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curLikes[0]++;
+                newsDBRef.child("news" + news.getNewsId()).child("numberOfLikes").setValue(curLikes[0]);
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,18 +71,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 }
             }
         });
-
-        final int[] curLikes = {Math.toIntExact(news.getNumberOfLikes())};
-        newsDBRef = FirebaseDatabase.getInstance().getReference("News");
-        holder.itemView.findViewById(R.id.newsLikesButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                curLikes[0]++;
-                newsDBRef.child("news" + news.getNewsId()).child("numberOfLikes").setValue(curLikes[0]);
-                holder.btnLikes.setText(String.valueOf(news.getNumberOfLikes()) + 1);
-            }
-        });
-
 
     }
 
