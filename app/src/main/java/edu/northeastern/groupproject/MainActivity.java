@@ -12,8 +12,9 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import edu.northeastern.groupproject.FirebaseAuth.Login;
+
 import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
+import edu.northeastern.groupproject.Loginregister.Login;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
 import edu.northeastern.groupproject.WebService.WebServiceActivity;
 
