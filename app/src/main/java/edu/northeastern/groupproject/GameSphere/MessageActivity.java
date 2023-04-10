@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.northeastern.groupproject.GameSphere.adapter.MessageAdapter;
+import edu.northeastern.groupproject.GameSphere.model.Member;
 import edu.northeastern.groupproject.GameSphere.model.Message;
 import edu.northeastern.groupproject.R;
 
@@ -31,6 +32,7 @@ public class MessageActivity extends AppCompatActivity {
     private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
+    private List<Member> memberList;
     private DatabaseReference dataRef;
 
     @Override

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import edu.northeastern.groupproject.GameSphere.model.Member;
@@ -28,7 +30,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHo
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         Member member = memberList.get(position);
-        // TODO: bind
+        holder.username.setText(String.valueOf(member.getUsername()));
+        Glide.with(context).load(String.valueOf(member.getImage())).centerCrop().into(holder.avatar);
     }
 
     @Override
