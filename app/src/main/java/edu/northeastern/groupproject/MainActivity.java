@@ -1,7 +1,6 @@
 package edu.northeastern.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,21 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-
-import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
-import edu.northeastern.groupproject.GameSphere.Home;
 import edu.northeastern.groupproject.Loginregister.Login;
+import edu.northeastern.groupproject.GameSphere.Home;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
 import edu.northeastern.groupproject.WebService.WebServiceActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnWebService, btnAboutUs, btnSendASticker, btnGameSphere;
-
     FirebaseAuth auth;
     Button button;
     TextView textView;
@@ -71,18 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.logout);
-//        textView = findViewById(R.id.user_details);
-//        user = auth.getCurrentUser();
-//        if (user == null){
-//            Intent intent = new Intent(getApplicationContext(), Login.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        else {
-//            textView.setText(user.getEmail());
-//        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

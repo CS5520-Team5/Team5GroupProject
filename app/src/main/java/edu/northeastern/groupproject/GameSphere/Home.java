@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import edu.northeastern.groupproject.MainActivity;
 import edu.northeastern.groupproject.R;
-import edu.northeastern.groupproject.WebService.WebServiceActivity;
 
 public class Home extends AppCompatActivity {
 
-    Button btnNews;
+    private Button btnNews;
 
     @SuppressLint("MissingInflatedId")
     @Override
