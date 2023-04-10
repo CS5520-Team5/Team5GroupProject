@@ -43,34 +43,33 @@ public class NewsActivity extends AppCompatActivity {
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Long newsId = snapshot.child("newsId").getValue(Long.class);
-                    Long numberOfLikes = snapshot.child("numberOfLikes").child("number").getValue((Long.class));
-                    String title = snapshot.child("title").getValue(String.class);
-                    String newsDate = snapshot.child("newsDate").getValue(String.class);
-                    String content = snapshot.child("content").getValue(String.class);
-
-                    List<Comment> commentList = new ArrayList<>();
-                    if (snapshot.hasChild("comments")) {
-                        Map<String, Map<String, String>> comments = (Map<String, Map<String, String>>) snapshot.child("comments").getValue();
-                        for (String comment : comments.keySet()) {
-                            String commentDate = comments.get(comment).get("commentDate");
-                            String commentContent = comments.get(comment).get("content");
-                            String commentUsername = comments.get(comment).get("username");
-                            String location = comments.get(comment).get("location");
-                            commentList.add(new Comment(commentUsername, commentContent, commentDate, location));
+                if (newsList.size() == 0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Long newsId = snapshot.child("newsId").getValue(Long.class);
+                        Long numberOfLikes = snapshot.child("numberOfLikes").child("number").getValue((Long.class));
+                        String title = snapshot.child("title").getValue(String.class);
+                        String newsDate = snapshot.child("newsDate").getValue(String.class);
+                        String content = snapshot.child("content").getValue(String.class);
+                        List<Comment> commentList = new ArrayList<>();
+                        if (snapshot.hasChild("comments")) {
+                            Map<String, Map<String, String>> comments = (Map<String, Map<String, String>>) snapshot.child("comments").getValue();
+                            for (String comment : comments.keySet()) {
+                                String commentDate = comments.get(comment).get("commentDate");
+                                String commentContent = comments.get(comment).get("content");
+                                String commentUsername = comments.get(comment).get("username");
+                                String location = comments.get(comment).get("location");
+                                commentList.add(new Comment(commentUsername, commentContent, commentDate, location));
+                            }
                         }
+                        News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
+                        newsList.add(news);
                     }
-                    News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
-                    newsList.add(news);
+                    newsAdapter.notifyDataSetChanged();
                 }
-
-                newsAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
         NewsClickListener newsClickListener = new NewsClickListener() {
