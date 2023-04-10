@@ -28,13 +28,11 @@ import edu.northeastern.groupproject.R;
 
 public class Login extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://team5-9cb36-default-rtdb.firebaseio.com/");
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login3);
-        mAuth = FirebaseAuth.getInstance();
 
         final EditText phone = findViewById(R.id.phone);
         final EditText password = findViewById(R.id.password);
