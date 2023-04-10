@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,13 +58,17 @@ public class Login extends AppCompatActivity {
                                 //mobile is exist in firebase database
                                 //now get password of user from firebase data and match it with user entered password
                                 final String getPassword = snapshot.child(phoneTxt).child("password").getValue(String.class);
+                                final String userName = snapshot.child(phoneTxt).child("fullname").getValue(String.class);
 
                                 if(getPassword.equals(passwordTxt)){
                                     Toast.makeText(Login.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
 
                                     //open MainActivity on success
+                                    SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+                                    sharedPreferences.edit().putString("name", userName).apply();
                                     startActivity(new Intent(Login.this, MainActivity.class));
                                     finish();
+//                                    signInWithPhoneNumberAndPassword(userName, getPassword);
                                 }
                                 else{
                                     Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
