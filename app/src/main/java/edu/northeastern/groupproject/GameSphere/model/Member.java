@@ -34,4 +34,13 @@ public class Member {
     public void setKey(String key) {
         this.key = key;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "key='" + key + '\'' +
+                ", username='" + username + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

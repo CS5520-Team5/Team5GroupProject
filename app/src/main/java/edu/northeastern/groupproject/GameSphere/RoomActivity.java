@@ -71,6 +71,7 @@ public class RoomActivity extends AppCompatActivity {
                 // see if user is already in this room
                 Intent intent=new Intent(RoomActivity.this, MessageActivity.class);
                 intent.putExtra("roomId",roomList.get(position).getRoomId());
+                intent.putExtra("members",String.join(",",roomList.get(position).getMembers()));
                 startActivity(intent);
             }
         };
