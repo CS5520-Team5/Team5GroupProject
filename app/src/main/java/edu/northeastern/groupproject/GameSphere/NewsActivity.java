@@ -43,53 +43,39 @@ public class NewsActivity extends AppCompatActivity {
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Long newsId = snapshot.child("newsId").getValue(Long.class);
-                    Long numberOfLikes = snapshot.child("numberOfLikes").getValue((Long.class));
-                    String title = snapshot.child("title").getValue(String.class);
-                    String newsDate = snapshot.child("newsDate").getValue(String.class);
-                    String content = snapshot.child("content").getValue(String.class);
-
-                    List<Comment> commentList = new ArrayList<>();
-
-                    if(snapshot.hasChild("comments")){
-                        Map<String, Map<String, String>> comments = (Map<String, Map<String, String>>) snapshot.child("comments").getValue();
-                        for (String comment : comments.keySet()) {
-                            String commentDate = comments.get(comment).get("commentDate");
-                            String commentContent = comments.get(comment).get("content");
-                            String commentUsername = comments.get(comment).get("username");
-                            String location = comments.get(comment).get("location");
-                            commentList.add(new Comment(commentUsername, commentContent, commentDate, location));
+                if (newsList.size() == 0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Long newsId = snapshot.child("newsId").getValue(Long.class);
+                        Long numberOfLikes = snapshot.child("numberOfLikes").child("number").getValue((Long.class));
+                        String title = snapshot.child("title").getValue(String.class);
+                        String newsDate = snapshot.child("newsDate").getValue(String.class);
+                        String content = snapshot.child("content").getValue(String.class);
+                        List<Comment> commentList = new ArrayList<>();
+                        if (snapshot.hasChild("comments")) {
+                            Map<String, Map<String, String>> comments = (Map<String, Map<String, String>>) snapshot.child("comments").getValue();
+                            for (String comment : comments.keySet()) {
+                                String commentDate = comments.get(comment).get("commentDate");
+                                String commentContent = comments.get(comment).get("content");
+                                String commentUsername = comments.get(comment).get("username");
+                                String location = comments.get(comment).get("location");
+                                commentList.add(new Comment(commentUsername, commentContent, commentDate, location));
+                            }
                         }
+                        News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
+                        newsList.add(news);
                     }
-                    News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
-                    newsList.add(news);
-
-                    }
-
-
-                newsAdapter.notifyDataSetChanged();
+                    newsAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
         NewsClickListener newsClickListener = new NewsClickListener() {
             @Override
             public void onItemClick(int position) {
                 List<Comment> commentList = newsList.get(position).getCommentList();
-//                if (commentList.size() > 0) {
-//                    SharedPreferences sharedPreferences = getSharedPreferences("newsInfo", MODE_PRIVATE);
-//                    sharedPreferences.edit().putString("newsIndex", String.valueOf(position)).apply();
-//                    sharedPreferences.edit().putString("commentIndex", String.valueOf(commentList.size())).apply();
-//                    Intent intent = new Intent(NewsActivity.this, CommentActivity.class);
-//                    intent.putExtra("commentList", (ArrayList) commentList);
-//                    startActivity(intent);
-//                } else {
-//                    Toast.makeText(NewsActivity.this, "There are no comments on this news.", Toast.LENGTH_LONG).show();
-//                }
                     SharedPreferences sharedPreferences = getSharedPreferences("newsInfo", MODE_PRIVATE);
                     sharedPreferences.edit().putString("newsIndex", String.valueOf(position)).apply();
                     sharedPreferences.edit().putString("commentIndex", String.valueOf(commentList.size())).apply();
@@ -111,7 +97,6 @@ public class NewsActivity extends AppCompatActivity {
         floatingActionButton.setVisibility(View.INVISIBLE);
         locationSwitch.setVisibility(View.INVISIBLE);
         postButton.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
