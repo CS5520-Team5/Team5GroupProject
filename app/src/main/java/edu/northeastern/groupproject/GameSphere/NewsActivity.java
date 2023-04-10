@@ -45,7 +45,7 @@ public class NewsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Long newsId = snapshot.child("newsId").getValue(Long.class);
-                    Long numberOfLikes = snapshot.child("numberOfLikes").getValue((Long.class));
+                    Long numberOfLikes = snapshot.child("numberOfLikes").child("number").getValue((Long.class));
                     String title = snapshot.child("title").getValue(String.class);
                     String newsDate = snapshot.child("newsDate").getValue(String.class);
                     String content = snapshot.child("content").getValue(String.class);
@@ -63,7 +63,7 @@ public class NewsActivity extends AppCompatActivity {
                     }
                     News news = new News(newsId, title, content, newsDate, numberOfLikes, commentList);
                     newsList.add(news);
-                    }
+                }
 
                 newsAdapter.notifyDataSetChanged();
             }

@@ -2,6 +2,7 @@ package edu.northeastern.groupproject.GameSphere;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     private List<News> newsList;
     private Context context;
     private NewsClickListener newsClickListener;
-    DatabaseReference newsDBRef;
+    private DatabaseReference newsDBRef;
 
     public NewsAdapter(List<News> newsList, Context context) {
         this.newsList = newsList;
         this.context = context;
+        newsDBRef = FirebaseDatabase.getInstance().getReference("News");
     }
 
     public void setOnItemClickListener(NewsClickListener newsClickListener) {
@@ -49,17 +51,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         holder.titleTextView.setText(String.valueOf(news.getTitle()));
         holder.contentTextView.setText(String.valueOf(news.getContent()));
         holder.dateTextView.setText(String.valueOf(news.getNewsDate()));
-        holder.btnLikes.setText(String.valueOf(news.getNumberOfLikes()));
+        holder.likesTextView.setText(String.valueOf(news.getNumberOfLikes()));
 
-
-
-        final int[] curLikes = {Math.toIntExact(news.getNumberOfLikes())};
-        newsDBRef = FirebaseDatabase.getInstance().getReference("News");
         holder.btnLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                curLikes[0]++;
-                newsDBRef.child("news" + news.getNewsId()).child("numberOfLikes").setValue(curLikes[0]);
+                int curLikes = Math.toIntExact(news.getNumberOfLikes());
+                int newLikes = curLikes + 1;
+                newsDBRef.child("news" + news.getNewsId()).child("numberOfLikes").child("number").setValue(newLikes);
+                news.setNumberOfLikes((long) newLikes);
+                newsList.set(position, news);
+                notifyDataSetChanged();
             }
         });
 

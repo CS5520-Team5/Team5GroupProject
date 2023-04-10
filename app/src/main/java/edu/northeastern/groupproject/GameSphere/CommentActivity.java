@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +24,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -43,7 +41,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +58,6 @@ public class CommentActivity extends AppCompatActivity {
     private ArrayList<Comment> commentList;
     FloatingActionButton floatingActionButton;
     TextView commentText;
-    Switch locationSwitch;
     Button postButton;
     boolean commentTextVisibility = false;
     private FusedLocationProviderClient fusedLocationClient;
@@ -180,16 +176,10 @@ public class CommentActivity extends AppCompatActivity {
                 databaseReference = FirebaseDatabase.getInstance().getReference("News");
                 databaseReference.child(currentNews).child("comments").push().setValue(map);
                 commentTextVisibility = false;
-//                Intent intent = new Intent(CommentActivity.this, CommentActivity.class);
-//                commentList.add(new Comment(userName, newContent, timeStamp, userLocation));
-//                intent.putExtra("commentList", (ArrayList) commentList);
-//                startActivity(intent);
                 commentList.add(new Comment(userName, newContent, timeStamp, userLocation));
                 getIntent().putExtra("commentList", (ArrayList) commentList);
                 finish();
                 startActivity(getIntent());
-
-
             }
         });
     }
@@ -201,14 +191,12 @@ public class CommentActivity extends AppCompatActivity {
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
         task.addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
-                                      @Override
-                                      public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                                          isUpdateLocation = true;
-                                          resetLocationUpdates();
-                                      }
-                                  }
-
-        );
+          @Override
+          public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+              isUpdateLocation = true;
+              resetLocationUpdates();
+          }
+        });
     }
 
     private void createLocationRequests() {
