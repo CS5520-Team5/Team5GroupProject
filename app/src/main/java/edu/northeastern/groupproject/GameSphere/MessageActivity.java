@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,15 +31,17 @@ import edu.northeastern.groupproject.GameSphere.model.Message;
 import edu.northeastern.groupproject.R;
 
 public class MessageActivity extends AppCompatActivity {
-    private String roomId;
+    private String roomId,roomName;
     private static String sender="";
     private RecyclerView messageRecyclerView,memberRecyclerView;
+    private TextView roomNameView;
     private MessageAdapter messageAdapter;
     private MemberAdapter memberAdapter;
     private List<Message> messageList;
     private List<Member> memberList;
     private HashSet<String> memberKey;
     private DatabaseReference dataRef;
+    private HashMap<String,Member> memberMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +51,33 @@ public class MessageActivity extends AppCompatActivity {
         messageList=new ArrayList<>();
         memberList=new ArrayList<>();
         roomId=(String) getIntent().getStringExtra("roomId");
+        roomName=(String) getIntent().getStringExtra("roomName");
+        roomNameView=findViewById(R.id.room_name);
+        roomNameView.setText(roomName);
         String memberKeyStr=(String) getIntent().getStringExtra("members");
         memberKey=new HashSet<String>(Arrays.asList(memberKeyStr.split(",")));
         Log.v("member key set",memberKey.toString());
         dataRef = FirebaseDatabase.getInstance().getReference();
+        memberMap=new HashMap<>();
 
-
-        // Message Recycler View
-        getMessageData();
-        messageRecyclerView =findViewById(R.id.message_list);
-        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        messageAdapter=new MessageAdapter(messageList,this);
-        messageRecyclerView.setAdapter(messageAdapter);
-        // communication
-        SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
-        sender=sp.getString("name","");
         // Member Recycler View
         getMemberData();
         memberRecyclerView=findViewById(R.id.user_list);
         memberRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         memberAdapter=new MemberAdapter(memberList,this);
         memberRecyclerView.setAdapter(memberAdapter);
+
+        // communication
+        SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
+        sender=sp.getString("name","");
+
+        // Message Recycler View
+        messageRecyclerView =findViewById(R.id.message_list);
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        messageAdapter=new MessageAdapter(messageList,this);
+        messageRecyclerView.setAdapter(messageAdapter);
+        getMessageData();
+
     }
     private void getMessageData(){
         Query query = dataRef.child("MessageHistory").orderByChild("roomId").equalTo(roomId);
@@ -82,6 +91,13 @@ public class MessageActivity extends AppCompatActivity {
                     String sender=snapshot.child("sender").getValue(String.class);
                     Long time=snapshot.child("time").getValue(Long.class);
                     Message message=new Message(messageId,content,roomId,sender,time);
+
+                    if(memberMap.containsKey(sender)){
+                        String senderName=memberMap.get(sender).getUsername();
+                        String avatar=memberMap.get(sender).getImage();
+                        message.setSender(senderName);
+                        message.setAvatar(avatar);
+                    }
                     Log.v("message",message.toString());
                     messageList.add(message);
                 }
@@ -107,8 +123,10 @@ public class MessageActivity extends AppCompatActivity {
                         Member member=new Member(key,username,avatar);
                         Log.v("member",member.toString());
                         memberList.add(member);
+                        memberMap.put(key,member);
                     }
                 }
+                memberAdapter.notifyDataSetChanged();
             }
 
             @Override

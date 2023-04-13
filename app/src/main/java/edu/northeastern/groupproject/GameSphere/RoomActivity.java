@@ -72,6 +72,7 @@ public class RoomActivity extends AppCompatActivity {
                 Intent intent=new Intent(RoomActivity.this, MessageActivity.class);
                 intent.putExtra("roomId",roomList.get(position).getRoomId());
                 intent.putExtra("members",String.join(",",roomList.get(position).getMembers()));
+                intent.putExtra("roomName",roomList.get(position).getRoomName());
                 startActivity(intent);
             }
         };

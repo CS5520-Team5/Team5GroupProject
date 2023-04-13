@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +44,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String formattedDate = sdf.format(date);
         holder.timestamp.setText(formattedDate);
         holder.messageContent.setText(String.valueOf(message.getContent()));
+        Glide.with(context).load(String.valueOf(message.getAvatar())).centerCrop().into(holder.avatar);
     }
 
     @Override
@@ -52,6 +56,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         private TextView username;
         private TextView timestamp;
         private TextView messageContent;
+        private ImageView avatar;
 
 
         public MessageViewHolder(@NonNull View itemView) {
@@ -59,6 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             username=itemView.findViewById(R.id.sender);
             timestamp=itemView.findViewById(R.id.timestamp);
             messageContent=itemView.findViewById(R.id.message_content);
+            avatar=itemView.findViewById(R.id.avatar);
         }
     }
 }

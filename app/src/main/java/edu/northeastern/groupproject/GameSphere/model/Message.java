@@ -6,7 +6,17 @@ public class Message {
     private String content;
     private String roomId;
     private String sender;
+    private String avatar;
     private Long time;
+
+    public Message(String messageId, String content, String roomId, String sender, String avatar, Long time) {
+        this.messageId = messageId;
+        this.content = content;
+        this.roomId = roomId;
+        this.sender = sender;
+        this.avatar = avatar;
+        this.time = time;
+    }
 
     public Message(String messageId, String content, String roomId, String sender, Long time) {
         this.messageId = messageId;
@@ -14,6 +24,14 @@ public class Message {
         this.roomId = roomId;
         this.sender = sender;
         this.time = time;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getMessageId() {
