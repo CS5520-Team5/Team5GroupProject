@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +47,7 @@ public class MessageActivity extends AppCompatActivity {
     private static String sender="";
     private RecyclerView messageRecyclerView,memberRecyclerView;
     private TextView roomNameView;
-    private ImageView iv_send;
+    private ImageView iv_send,sender_avatar;
     private EditText message_input;
     private MessageAdapter messageAdapter;
     private MemberAdapter memberAdapter;
@@ -69,6 +70,7 @@ public class MessageActivity extends AppCompatActivity {
         roomNameView=findViewById(R.id.room_name);
         roomNameView.setText(roomName);
         iv_send=findViewById(R.id.iv_send);
+        sender_avatar=findViewById(R.id.sender_avatar);
         message_input=findViewById(R.id.message_input);
         String memberKeyStr=(String) getIntent().getStringExtra("members");
         memberKey=new HashSet<String>(Arrays.asList(memberKeyStr.split(",")));
@@ -103,6 +105,7 @@ public class MessageActivity extends AppCompatActivity {
     }
     private void getMessageData(){
         Log.v("haha","getting message data full");
+        Glide.with(this).load(String.valueOf(memberMap.get(sender).getImage())).into(sender_avatar);
         Query query = dataRef.child("MessageHistory").orderByChild("roomId").equalTo(roomId);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -153,6 +156,7 @@ public class MessageActivity extends AppCompatActivity {
                         memberMap.put(key,member);
                     }
                 }
+
                 memberAdapter.notifyDataSetChanged();
                 if(messageList.size()==0){
                     getMessageData();
@@ -179,7 +183,7 @@ public class MessageActivity extends AppCompatActivity {
         message_input.setText("");
         message_input.clearFocus();
     }
-    boolean isFirst;
+    boolean isFirst=true;
     private void initNotification() {
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -189,6 +193,8 @@ public class MessageActivity extends AppCompatActivity {
     }
     private long latTime;
     private void noticeMsg(Message m) {
+        Log.v("haha-latTime",latTime+"");
+        Log.v("haha-isFirst",isFirst+"");
         if (latTime>m.getTime()){
             return;
         }
