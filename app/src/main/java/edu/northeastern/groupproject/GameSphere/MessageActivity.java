@@ -72,7 +72,7 @@ public class MessageActivity extends AppCompatActivity {
         message_input=findViewById(R.id.message_input);
         String memberKeyStr=(String) getIntent().getStringExtra("members");
         memberKey=new HashSet<String>(Arrays.asList(memberKeyStr.split(",")));
-        Log.v("member key set",memberKey.toString());
+        Log.v("haha-member key set",memberKey.toString());
         dataRef = FirebaseDatabase.getInstance().getReference();
         memberMap=new HashMap<>();
 
@@ -86,13 +86,12 @@ public class MessageActivity extends AppCompatActivity {
         // communication
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
         sender=sp.getString("userkey","");
-
+        Log.v("haha-user",sender);
         // Message Recycler View
         messageRecyclerView =findViewById(R.id.message_list);
         messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter(messageList,this);
         messageRecyclerView.setAdapter(messageAdapter);
-        getMessageData();
         checkNotice();
         // send
         iv_send.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +104,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
     private void getMessageData(){
+        Log.v("haha","getting message data full");
         messageList.clear();
         Query query = dataRef.child("MessageHistory").orderByChild("roomId").equalTo(roomId);
         query.addValueEventListener(new ValueEventListener() {
@@ -117,19 +117,19 @@ public class MessageActivity extends AppCompatActivity {
                     String sender=snapshot.child("sender").getValue(String.class);
                     Long time=snapshot.child("time").getValue(Long.class);
                     Message message=new Message(messageId,content,roomId,sender,time);
-
                     if(memberMap.containsKey(sender)){
                         String senderName=memberMap.get(sender).getUsername();
                         String avatar=memberMap.get(sender).getImage();
+                        Log.v("haha",memberMap.get(sender).toString());
+                        Log.v("haha-avatar",avatar);
                         message.setSender(senderName);
                         message.setAvatar(avatar);
                     }
-                    Log.v("message",message.toString());
+                    Log.v("haha-message",message.toString());
                     messageList.add(message);
                 }
-                Log.v("messagelist",messageList.toString());
+                Log.v("haha-messagelist",messageList.toString());
                 messageAdapter.notifyDataSetChanged();
-                getMemberData();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -138,6 +138,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
     private void getMemberData(){
+        Log.v("haha","getting full member data");
         memberList.clear();
         dataRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,12 +149,15 @@ public class MessageActivity extends AppCompatActivity {
                         String username=snapshot.child("fullname").getValue(String.class);
                         String avatar=snapshot.child("avatar").getValue(String.class);
                         Member member=new Member(key,username,avatar);
-                        Log.v("member",member.toString());
+                        Log.v("haha-member",member.toString());
                         memberList.add(member);
                         memberMap.put(key,member);
                     }
                 }
                 memberAdapter.notifyDataSetChanged();
+                if(messageList.size()==0){
+                    getMessageData();
+                }
             }
 
             @Override
@@ -161,6 +165,7 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+
     }
     private void sendMessage(String msg) {
         if (TextUtils.isEmpty(msg)){
@@ -172,6 +177,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("roomId", roomId);
         hashMap.put("time", System.currentTimeMillis());
         dataRef.child("MessageHistory").push().setValue(hashMap);
+        getMessageData();
     }
     boolean isFirst;
     private void checkNotice() {

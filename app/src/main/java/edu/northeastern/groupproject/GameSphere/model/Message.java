@@ -81,6 +81,7 @@ public class Message {
                 ", content='" + content + '\'' +
                 ", roomId='" + roomId + '\'' +
                 ", sender='" + sender + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", time=" + time +
                 '}';
     }
