@@ -27,19 +27,18 @@ public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ImageButton btnEdit;
-    private TextView usernameText;
+    private TextView phoneText;
     private TextView nameText;
     private TextView ageText;
     private TextView emailText;
     private TextView gamesText;
     private ImageView profileImage;
     private SharedPreferences sharedPreferences;
-    private String username;
     private String name;
     private String age;
     private String email;
     private String games;
-    private Integer id;
+    private String phone;
 
     // TODO: Implement profile image display
 
@@ -48,36 +47,36 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        btnEdit = (ImageButton) findViewById(R.id.editButton);
-        usernameText = findViewById(R.id.profileUsername);
+        btnEdit = findViewById(R.id.editButton);
         nameText = findViewById(R.id.profileName);
+        phoneText = findViewById(R.id.profilePhone);
         ageText = findViewById(R.id.profileAge);
         emailText = findViewById(R.id.profileEmail);
         gamesText = findViewById(R.id.profileGames);
         profileImage = findViewById(R.id.profileImage);
         // Read user info
         sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-
-        // Update username
-        username = sharedPreferences.getString("name", "");
-        usernameText.setText(username);
+        // Update user's name and phone number
+        name = sharedPreferences.getString("name", "");
+        nameText.setText(name);
+        phone = sharedPreferences.getString("phone", "");
+        String phoneString = "Phone: " + phone;
+        phoneText.setText(phoneString);
 
         //Update user profile information
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
-        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.child(phone).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     showToast("Failed to get profile information");
                 } else {
-                    id = task.getResult().child("id").getValue(Integer.class);
                     // Register a listener to read data from newest update in database
                     ValueEventListener profileListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            name = snapshot.child("name").getValue(String.class);
-                            String nameString = "Name: " + name;
-                            nameText.setText(nameString);
+                            name = snapshot.child("fullname").getValue(String.class);
+                            nameText.setText(name);
                             email = snapshot.child("email").getValue(String.class);
                             String emailString = "Email: " + email;
                             emailText.setText(emailString);
@@ -94,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
                             showToast("Failed to get updated profile information");
                         }
                     };
-                    databaseReference.child(username).addValueEventListener(profileListener);
+                    databaseReference.child(phone).addValueEventListener(profileListener);
                 }
             }
         });
@@ -105,8 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("id", id);
-                bundle.putString("username", username);
+                bundle.putString("phone", phone);
                 bundle.putString("name", name);
                 bundle.putString("age", age);
                 bundle.putString("email", email);

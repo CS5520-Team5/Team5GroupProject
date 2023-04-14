@@ -28,12 +28,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editEmail;
     private EditText editGames;
     private ImageView profileImage;
-    private String username;
-    private String name;
+    private String fullname;
     private String age;
     private String email;
     private String games;
-    private Integer id;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +49,13 @@ public class EditProfileActivity extends AppCompatActivity {
         // Get information from bundle
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
-        username = bundle.getString("username");
-        name = bundle.getString("name");
+        phone = bundle.getString("phone");
+        fullname = bundle.getString("name");
         email = bundle.getString("email");
         age = bundle.getString("age");
         games = bundle.getString("games");
-        id = bundle.getInt("id");
         // Initialize default information
-        editName.setText(name);
+        editName.setText(fullname);
         editEmail.setText(email);
         editAge.setText(age);
         editGames.setText(games);
@@ -72,11 +70,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     String currEmail = editEmail.getText().toString();
                     String currAge = editAge.getText().toString();
                     String currGames = editGames.getText().toString();
-                    databaseReference.child("User").child(username).child("name").setValue(currName);
-                    databaseReference.child("User").child(username).child("email").setValue(currEmail);
-                    databaseReference.child("User").child(username).child("age").setValue(currAge);
-                    databaseReference.child("User").child(username).child("games").setValue(currGames);
-                    name = currName;
+                    databaseReference.child("users").child(phone).child("fullname").setValue(currName);
+                    databaseReference.child("users").child(phone).child("email").setValue(currEmail);
+                    databaseReference.child("users").child(phone).child("age").setValue(currAge);
+                    databaseReference.child("users").child(phone).child("games").setValue(currGames);
+                    fullname = currName;
                     email = currEmail;
                     age = currAge;
                     games = currGames;
@@ -111,7 +109,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String currEmail = editEmail.getText().toString();
         String currAge = editAge.getText().toString();
         String currGames = editGames.getText().toString();
-        return !currName.equals(name) || !currEmail.equals(email)
+        return !currName.equals(fullname) || !currEmail.equals(email)
                 || !currAge.equals(age) || !currGames.equals(games);
     }
 

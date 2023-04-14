@@ -4,7 +4,7 @@ buildscript {
         google()
         mavenCentral()
     }
-    ext.kotlin_version = '1.8.0'
+    ext.kotlin_version = '1.6.0'
     dependencies {
         classpath 'com.google.gms:google-services:4.3.15'
     }

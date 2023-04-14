@@ -38,24 +38,21 @@
     <string name="previous">Previous</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
     <!--    Strings in HomeActivity-->
     <string name="newsBtnString">News</string>
     <string name="profileBtnString">Profile</string>
     <!--    Strings in ProfileActivity-->
     <string name="profileImageString">Profile Image</string>
-    <string name="usernameString">Username</string>
     <string name="nameString">Name</string>
     <string name="ageString">Age</string>
     <string name="emailString">Email</string>
     <string name="gamesString">Games</string>
     <string name="editButtonString">Edit Button</string>
-    <string name="postsString">Posts</string>
-    <string name="commentsString">Comments</string>
+    <string name="phoneString">Phone</string>
     <!--    Strings in EditProfileActivity-->
     <string name="updateImageString">Upload New Profile Image</string>
     <string name="updateButtonString">Update</string>
-
+    <!--    Strings in LoginActivity-->
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
