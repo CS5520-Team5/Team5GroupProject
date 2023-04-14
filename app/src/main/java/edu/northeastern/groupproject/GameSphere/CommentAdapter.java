@@ -30,6 +30,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentViewHolder>{
         holder.contentTextView.setText(comment.getContent());
         holder.dateTextView.setText(comment.getCommentDate());
         holder.userNameTextView.setText(comment.getUserName());
+        holder.userLocation.setText(comment.getCountry());
     }
 
     @Override
