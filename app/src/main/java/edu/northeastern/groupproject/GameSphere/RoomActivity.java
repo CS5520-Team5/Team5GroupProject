@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +40,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import edu.northeastern.groupproject.GameSphere.adapter.RoomAdapter;
@@ -61,19 +65,14 @@ public class RoomActivity extends AppCompatActivity {
         roomList =new ArrayList<>();
 
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
-        currentUser=sp.getString("name","");
+        currentUser=sp.getString("userkey","");
 
         dataRef= FirebaseDatabase.getInstance().getReference("Rooms");
         getFullData();
         RoomClickListener roomClickListener=new RoomClickListener() {
             @Override
             public void onItemClick(int position) {
-                // see if user is already in this room
-                Intent intent=new Intent(RoomActivity.this, MessageActivity.class);
-                intent.putExtra("roomId",roomList.get(position).getRoomId());
-                intent.putExtra("members",String.join(",",roomList.get(position).getMembers()));
-                intent.putExtra("roomName",roomList.get(position).getRoomName());
-                startActivity(intent);
+                roomClick(position);
             }
         };
         recyclerView=findViewById(R.id.recycler_view_room);
@@ -101,6 +100,13 @@ public class RoomActivity extends AppCompatActivity {
                 return false;
             }
         });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                getFullData();
+                return false;
+            }
+        });
 
         btnAddRoom=findViewById(R.id.btn_add_room);
         btnAddRoom.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +116,49 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
     }
+    private void roomClick(int position){
+        List<String> members=roomList.get(position).getMembers();
+        if(members.contains(currentUser)){
+            Intent intent=new Intent(RoomActivity.this, MessageActivity.class);
+            intent.putExtra("roomId",roomList.get(position).getRoomId());
+            intent.putExtra("members",String.join(",",members));
+            intent.putExtra("roomName",roomList.get(position).getRoomName());
+            startActivity(intent);
+        }
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(RoomActivity.this);
+// Set the title and message of the dialog
+            builder.setTitle("You are not a member of this game room");
+            builder.setMessage("Do you want to join?");
 
+// Set the positive button (Yes button) and its click listener
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO: update firebase
+                    String roomId=roomList.get(position).getRoomId();
+                    List<String> members= roomList.get(position).getMembers();
+                    members.add(currentUser);
+                    dataRef.child(roomId).child("members").setValue(members);
+                    Toast.makeText(getApplicationContext(), "You are now member of this group", Toast.LENGTH_SHORT).show();
+                    roomClick(position);
+                }
+            });
+
+// Set the negative button (No button) and its click listener
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Handle the negative button click
+                    Toast.makeText(getApplicationContext(), "You have no access", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+// Create and show the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
     private Room createRoomFromData(DataSnapshot snapshot ){
         String roomId = snapshot.child("roomId").getValue(String.class);
         String image=snapshot.child("image").getValue(String.class);
@@ -118,7 +166,6 @@ public class RoomActivity extends AppCompatActivity {
         String roomDescription=snapshot.child("roomDescription").getValue(String.class);
         String roomName=snapshot.child("roomName").getValue(String.class);
         Long time=snapshot.child("time").getValue(Long.class);
-
         List<String> members = snapshot.child("members").getValue(new GenericTypeIndicator<List<String>>(){});
         Room room=new Room(roomId,image,roomDescription,roomName,members,time,admin);
         return room;
@@ -212,6 +259,9 @@ public class RoomActivity extends AppCompatActivity {
                     roomList.add(room);
                 }
                 roomAdapter.notifyDataSetChanged();
+                if(roomList.size()==0){
+                    Toast.makeText(getApplicationContext(), "No data, please search only the exact room name", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

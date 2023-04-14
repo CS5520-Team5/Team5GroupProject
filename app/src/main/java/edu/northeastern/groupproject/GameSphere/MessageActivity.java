@@ -13,10 +13,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,8 +40,6 @@ import edu.northeastern.groupproject.GameSphere.adapter.MessageAdapter;
 import edu.northeastern.groupproject.GameSphere.model.Member;
 import edu.northeastern.groupproject.GameSphere.model.Message;
 import edu.northeastern.groupproject.R;
-import edu.northeastern.groupproject.Sticker.ConversationActivity;
-import edu.northeastern.groupproject.Sticker.Sticker;
 
 public class MessageActivity extends AppCompatActivity {
     private String roomId,roomName;
@@ -89,8 +85,7 @@ public class MessageActivity extends AppCompatActivity {
 
         // communication
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
-        sender=sp.getString("name","");
-        sender="1";// TODO: change
+        sender=sp.getString("userkey","");
 
         // Message Recycler View
         messageRecyclerView =findViewById(R.id.message_list);
@@ -177,7 +172,6 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("roomId", roomId);
         hashMap.put("time", System.currentTimeMillis());
         dataRef.child("MessageHistory").push().setValue(hashMap);
-        getMessageData();
     }
     boolean isFirst;
     private void checkNotice() {
@@ -187,38 +181,22 @@ public class MessageActivity extends AppCompatActivity {
 
             manager.createNotificationChannel(notificationChannel);
         }
-        dataRef.child("MessageHistory").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Sticker sticker = snapshot.getValue(Sticker.class);
-//                    if(sticker.getRecipient().equals(userName) ){
-//                        noticeMsg(sticker);
-//                    }
-                }
-                isFirst = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        for(Message m:messageList){
+            noticeMsg(m);
+        }
     }
     private long latTime;
-    private void noticeMsg(Sticker sticker) {
-        if (latTime>sticker.getTime()){
+    private void noticeMsg(Message m) {
+        if (latTime>m.getTime()){
             return;
         }
         if (isFirst){
-            if (latTime<sticker.getTime()){
-                latTime = sticker.getTime();
+            if (latTime<m.getTime()){
+                latTime = m.getTime();
             }
             return;
         }
-        int ic = -1;
-        Intent intent = new Intent(this, ConversationActivity.class);
+        Intent intent = new Intent(this, MessageActivity.class);
         PendingIntent pendingIntent;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             pendingIntent = PendingIntent.getActivity(this, 123, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -226,10 +204,8 @@ public class MessageActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 123, intent, PendingIntent.FLAG_ONE_SHOT);
         }
         Notification notification = new NotificationCompat.Builder(this,"notice")
-                .setContentText("New sticker added to chat!")
+                .setContentText("New Message added to chat!")
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(ic)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),ic))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .build();
