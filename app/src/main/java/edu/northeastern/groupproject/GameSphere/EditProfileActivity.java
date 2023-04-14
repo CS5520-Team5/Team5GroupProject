@@ -74,6 +74,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     databaseReference.child("users").child(phone).child("email").setValue(currEmail);
                     databaseReference.child("users").child(phone).child("age").setValue(currAge);
                     databaseReference.child("users").child(phone).child("games").setValue(currGames);
+                    // Update variables
                     fullname = currName;
                     email = currEmail;
                     age = currAge;
