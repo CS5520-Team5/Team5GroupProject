@@ -9,4 +9,19 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#A9A9A9</color>
     <color name="darkGrey">#111111</color>
+<color name="lightgrey">#EEE</color>
+<color name="yellow_200">#ffeb46</color>
+<color name="yellow_400">#ffc000</color>
+<color name="yellow_500">#ffde03</color>
+<color name="yellow_dark_primary">#242316</color>
+
+<color name="blue_200">#91a4fc</color>
+<color name="blue_700">#0336ff</color>
+<color name="blue_800">#0035c9</color>
+<color name="blue_dark_primary">#1c1d24</color>
+
+<color name="pink_200">#ff7597</color>
+<color name="pink_500">#ff0266</color>
+<color name="pink_600">#d8004d</color>
+<color name="pink_dark_primary">#24191c</color>
 </resources>

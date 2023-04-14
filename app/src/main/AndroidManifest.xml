@@ -91,6 +91,8 @@
         <activity
             android:name=".Sticker.LoginActivity"
             android:exported="false" />
+        <activity android:name=".GameSphere.MessageActivity"></activity>
+        <activity android:name=".GameSphere.RoomActivity"></activity>
     </application>
 
 </manifest>
