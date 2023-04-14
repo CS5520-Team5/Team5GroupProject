@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:text="News Title"
                 android:textSize="18sp"
@@ -61,24 +62,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/newsContentTextView"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <ImageButton
-                android:id="@+id/newsLikesButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/thumbs_up"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/newsLikesText"
-                app:layout_constraintTop_toBottomOf="@+id/newsContentTextView"
-                app:layout_constraintVertical_bias="0.0" />
-
             <TextView
-                android:id="@+id/newsLikesText"
+                android:id="@+id/newsLikesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Likes"
+                android:layout_marginEnd="16dp"
+                android:text="Number of Likes"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsContentTextView"

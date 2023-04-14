@@ -8,13 +8,12 @@ import edu.northeastern.groupproject.R;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView contentTextView, dateTextView, userNameTextView, userLocation;
+    public TextView contentTextView, dateTextView, userNameTextView;
 
     public CommentViewHolder(@NonNull View itemView) {
         super(itemView);
         contentTextView = itemView.findViewById(R.id.commentContentTextView);
         dateTextView = itemView.findViewById(R.id.commentDateTextView);
         userNameTextView = itemView.findViewById(R.id.commentUserTextView);
-        userLocation = itemView.findViewById(R.id.commentLocationTextView);
     }
 }

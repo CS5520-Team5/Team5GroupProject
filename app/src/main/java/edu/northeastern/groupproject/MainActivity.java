@@ -1,27 +1,23 @@
 package edu.northeastern.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import edu.northeastern.groupproject.Loginregister.Login;
-import edu.northeastern.groupproject.GameSphere.Home;
+
+import edu.northeastern.groupproject.GameSphere.GameSphereLoginActivity;
+import edu.northeastern.groupproject.GameSphere.RoomActivity;
 import edu.northeastern.groupproject.Sticker.LoginActivity;
 import edu.northeastern.groupproject.WebService.WebServiceActivity;
+import edu.northeastern.groupproject.GameSphere.Home;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnWebService, btnAboutUs, btnSendASticker, btnGameSphere;
-    FirebaseAuth auth;
-    Button button;
-    TextView textView;
-    FirebaseUser user;
+    Button btnWebService, btnAboutUs, btnSendASticker, btnGameSphere,btnGameHome;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,24 +56,22 @@ public class MainActivity extends AppCompatActivity {
         btnGameSphere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Home.class);
+                Intent intent = new Intent(MainActivity.this, GameSphereLoginActivity.class);
                 startActivity(intent);
             }
         });
 
-        button = findViewById(R.id.logout);
-        button.setOnClickListener(new View.OnClickListener() {
+        btnGameHome = findViewById(R.id.btnGameHome);
+        btnGameHome.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
+            public void onClick(View view) {
+                System.out.println("clicked bypass");
+                Log.i("MyApp","clicked bypass");
+                Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
-    }
 
-    private String getCurrentUserName(){
-        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
-        return sp.getString("name","");
+
     }
 }
