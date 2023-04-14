@@ -72,7 +72,6 @@ public class MessageActivity extends AppCompatActivity {
         message_input=findViewById(R.id.message_input);
         String memberKeyStr=(String) getIntent().getStringExtra("members");
         memberKey=new HashSet<String>(Arrays.asList(memberKeyStr.split(",")));
-        Log.v("haha-member key set",memberKey.toString());
         dataRef = FirebaseDatabase.getInstance().getReference();
         memberMap=new HashMap<>();
 
@@ -86,13 +85,12 @@ public class MessageActivity extends AppCompatActivity {
         // communication
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
         sender=sp.getString("userkey","");
-        Log.v("haha-user",sender);
         // Message Recycler View
         messageRecyclerView =findViewById(R.id.message_list);
         messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter(messageList,this);
         messageRecyclerView.setAdapter(messageAdapter);
-        checkNotice();
+        initNotification();
         // send
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,11 +103,11 @@ public class MessageActivity extends AppCompatActivity {
     }
     private void getMessageData(){
         Log.v("haha","getting message data full");
-        messageList.clear();
         Query query = dataRef.child("MessageHistory").orderByChild("roomId").equalTo(roomId);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshots) {
+                messageList.clear();
                 for(DataSnapshot snapshot:snapshots.getChildren()){
                     String content=snapshot.child("content").getValue(String.class);
                     String messageId=snapshot.child("messageId").getValue(String.class);
@@ -120,16 +118,17 @@ public class MessageActivity extends AppCompatActivity {
                     if(memberMap.containsKey(sender)){
                         String senderName=memberMap.get(sender).getUsername();
                         String avatar=memberMap.get(sender).getImage();
-                        Log.v("haha",memberMap.get(sender).toString());
-                        Log.v("haha-avatar",avatar);
                         message.setSender(senderName);
                         message.setAvatar(avatar);
+                        noticeMsg(message);
                     }
-                    Log.v("haha-message",message.toString());
                     messageList.add(message);
                 }
                 Log.v("haha-messagelist",messageList.toString());
+                Log.v("haha-messagelist",messageList.size()+"num");
+                isFirst=false;
                 messageAdapter.notifyDataSetChanged();
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -139,10 +138,10 @@ public class MessageActivity extends AppCompatActivity {
     }
     private void getMemberData(){
         Log.v("haha","getting full member data");
-        memberList.clear();
         dataRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshots) {
+                memberList.clear();
                 for(DataSnapshot snapshot:snapshots.getChildren()){
                     String key=snapshot.getKey();
                     if(memberKey.contains(key)){
@@ -177,18 +176,15 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("roomId", roomId);
         hashMap.put("time", System.currentTimeMillis());
         dataRef.child("MessageHistory").push().setValue(hashMap);
-        getMessageData();
+        message_input.setText("");
+        message_input.clearFocus();
     }
     boolean isFirst;
-    private void checkNotice() {
+    private void initNotification() {
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel("notice","message",NotificationManager.IMPORTANCE_HIGH);
-
             manager.createNotificationChannel(notificationChannel);
-        }
-        for(Message m:messageList){
-            noticeMsg(m);
         }
     }
     private long latTime;
@@ -211,6 +207,7 @@ public class MessageActivity extends AppCompatActivity {
         }
         Notification notification = new NotificationCompat.Builder(this,"notice")
                 .setContentText("New Message added to chat!")
+                .setSmallIcon(R.drawable.notifications)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

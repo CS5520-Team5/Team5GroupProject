@@ -20,24 +20,13 @@
             app:layout_constraintDimensionRatio="4:3"
             android:scaleType="centerCrop"
             android:contentDescription="thumbContentDesc"/>
-        <ImageView
-            android:id="@+id/admin_user_avatar"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/room_image"
-            android:foreground="@drawable/avatar_outline"
-            app:circleCrop="true"
-            android:importantForAccessibility="no"/>
 
         <TextView
             android:id="@+id/room_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/admin_user_avatar"
+            app:layout_constraintTop_toBottomOf="@id/room_image"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="@dimen/grid_2"
             android:gravity="center"
@@ -69,7 +58,7 @@
 
         <ImageView
             android:id="@+id/user_icon"
-            android:layout_width="0dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/room_num"
             app:layout_constraintEnd_toStartOf="@id/guideline"

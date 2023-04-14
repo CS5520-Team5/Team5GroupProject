@@ -65,7 +65,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     public class RoomViewHolder extends RecyclerView.ViewHolder{
         private ImageView room_image;
-        private ImageView admin_user_avatar;
         private TextView room_name;
         private TextView room_desc;
         private TextView room_num;
@@ -73,7 +72,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             room_image=itemView.findViewById(R.id.room_image);
-            admin_user_avatar=itemView.findViewById(R.id.admin_user_avatar);
             room_name=itemView.findViewById(R.id.room_name);
             room_desc=itemView.findViewById(R.id.room_desc);
             room_num=itemView.findViewById(R.id.room_num);
