@@ -32,14 +32,12 @@
     <item name="btnProfile" type="id" />
     <!--    IDs in ProfileActivity-->
     <item name="profileImage" type="id" />
-    <item name="profileUsername" type="id" />
+    <item name="profilePhone" type="id" />
     <item name="profileName" type="id" />
     <item name="profileAge" type="id" />
     <item name="profileEmail" type="id" />
     <item name="profileGames" type="id" />
     <item name="editButton" type="id" />
-    <item name="postsButton" type="id" />
-    <item name="commentsButton" type="id" />
     <!--    IDs in EditProfileActivity-->
     <item name="editImage" type="id" />
     <item name="editName" type="id" />

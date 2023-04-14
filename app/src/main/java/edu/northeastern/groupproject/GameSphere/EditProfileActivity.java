@@ -33,7 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String age;
     private String email;
     private String games;
-    private Integer id;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,11 @@ public class EditProfileActivity extends AppCompatActivity {
         // Get information from bundle
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
-        username = bundle.getString("username");
+        phone = bundle.getString("phone");
         name = bundle.getString("name");
         email = bundle.getString("email");
         age = bundle.getString("age");
         games = bundle.getString("games");
-        id = bundle.getInt("id");
         // Initialize default information
         editName.setText(name);
         editEmail.setText(email);
@@ -72,10 +71,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     String currEmail = editEmail.getText().toString();
                     String currAge = editAge.getText().toString();
                     String currGames = editGames.getText().toString();
-                    databaseReference.child("User").child(username).child("name").setValue(currName);
-                    databaseReference.child("User").child(username).child("email").setValue(currEmail);
-                    databaseReference.child("User").child(username).child("age").setValue(currAge);
-                    databaseReference.child("User").child(username).child("games").setValue(currGames);
+                    databaseReference.child("users").child(phone).child("fullname").setValue(currName);
+                    databaseReference.child("users").child(phone).child("email").setValue(currEmail);
+                    databaseReference.child("users").child(phone).child("age").setValue(currAge);
+                    databaseReference.child("users").child(phone).child("games").setValue(currGames);
                     name = currName;
                     email = currEmail;
                     age = currAge;
