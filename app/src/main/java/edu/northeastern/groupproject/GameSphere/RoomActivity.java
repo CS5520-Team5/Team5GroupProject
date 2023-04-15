@@ -24,6 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +36,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -51,10 +55,11 @@ public class RoomActivity extends AppCompatActivity {
     public static String currentUser="";
     private RecyclerView recyclerView;
     private SearchView searchView;
-    private ImageView btnAddRoom;
+    private ImageView btnAddRoom,addRoomImage;
     private RoomAdapter roomAdapter;
     private List<Room> roomList;
     private DatabaseReference dataRef;
+    private String tempimage="https://firebasestorage.googleapis.com/v0/b/team5-9cb36.appspot.com/o/RoomImage%2FSuper-Mario-Run-main_tcm25-454905_tcm32-455660.jpg?alt=media&token=b045c1fb-3741-49f9-8968-d397a442bd33"; //TODO: store image into firestore
     private static final int REQUEST_PHOTO = 1;
 
 
@@ -176,7 +181,7 @@ public class RoomActivity extends AppCompatActivity {
         addDialog.setContentView(R.layout.dialog_add_room);
 
         EditText addRoomName=addDialog.findViewById(R.id.add_room_name);
-        ImageView addRoomImage=addDialog.findViewById(R.id.add_room_image);
+        addRoomImage=addDialog.findViewById(R.id.add_room_image);
         Button btnAddRoomImage=addDialog.findViewById(R.id.btn_add_room_image);
         EditText addRoomDesc=addDialog.findViewById(R.id.add_room_description);
 
@@ -186,7 +191,6 @@ public class RoomActivity extends AppCompatActivity {
         btnAddRoomImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: upload picture
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -200,8 +204,7 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View view) {
                 HashMap<String,Object> hashMap=new HashMap<>();
                 hashMap.put("admin",currentUser);
-                String image="https://firebasestorage.googleapis.com/v0/b/team5-9cb36.appspot.com/o/RoomImage%2FSuper-Mario-Run-main_tcm25-454905_tcm32-455660.jpg?alt=media&token=b045c1fb-3741-49f9-8968-d397a442bd33"; //TODO: store image into firestore
-                hashMap.put("image",image);
+                hashMap.put("image",tempimage);
                 hashMap.put("members",new ArrayList<String>());
                 hashMap.put("roomDescription",addRoomDesc.getText().toString());
                 hashMap.put("roomName",addRoomName.getText().toString());
@@ -285,19 +288,39 @@ public class RoomActivity extends AppCompatActivity {
     );
 
     private void uploadPhoto(Uri photoUri) {
-        // Create a reference to the image file in Firestore
         String fileName = UUID.randomUUID().toString();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("RoomImage");
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("RoomImage").child(fileName);
 
         // Upload the image file to Firestore
         UploadTask uploadTask = storageRef.putFile(photoUri);
+
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             // Get the download URL of the image file
             Task<Uri> downloadUrlTask = storageRef.getDownloadUrl();
-            downloadUrlTask.addOnSuccessListener(downloadUrl -> {
-                // TODO: Save the download URL to Firestore or perform other operations with it
-//                Log.d(TAG, "Download URL: " + downloadUrl.toString());
+//            downloadUrlTask.addOnSuccessListener(downloadUrl -> {
+//                // TODO: Save the download URL to Firestore or perform other operations with it
+//                Log.d("download url", "Download URL: " + downloadUrl.toString());
+//               return downloadUrl.toString();
+//            });
+            downloadUrlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    tempimage=uri.toString();
+                    Glide.with(RoomActivity.this).load(String.valueOf(tempimage)).into(addRoomImage);
+                    Log.d("download url", "Download URL: " + tempimage.toString());
+                }
             });
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                // Track upload progress
+                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                Log.d("upload picture", "Upload is " + progress + "% done");
+            }
         });
     }
 
