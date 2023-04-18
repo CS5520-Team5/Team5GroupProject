@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -39,8 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String email;
     private String games;
     private String phone;
-
-    // TODO: Implement profile image display
+    private String avatarUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,13 @@ public class ProfileActivity extends AppCompatActivity {
                             games = snapshot.child("games").getValue(String.class);
                             String gamesString = "Games: " + games;
                             gamesText.setText(gamesString);
+                            avatarUri = snapshot.child("avatar").getValue(String.class);
+                            Glide.with(ProfileActivity.this)
+                                    .load(avatarUri)
+                                    .override(160, 160)
+                                    .centerCrop()
+                                    .transform(new RoundedCorners(30))
+                                    .into(profileImage);
                         }
 
                         @Override
@@ -109,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
                 bundle.putString("age", age);
                 bundle.putString("email", email);
                 bundle.putString("games", games);
+                bundle.putString("avatar", avatarUri);
                 intent.putExtra("bundle", bundle);
                 startActivity(intent);
             }
