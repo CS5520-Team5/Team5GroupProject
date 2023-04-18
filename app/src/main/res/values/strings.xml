@@ -46,7 +46,7 @@
     <string name="nameString">Name</string>
     <string name="ageString">Age</string>
     <string name="emailString">Email</string>
-    <string name="gamesString">Games</string>
+    <string name="gamesString">Favorite Games</string>
     <string name="editButtonString">Edit Button</string>
     <string name="phoneString">Phone</string>
     <!--    Strings in EditProfileActivity-->

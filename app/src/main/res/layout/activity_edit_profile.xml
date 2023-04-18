@@ -10,7 +10,7 @@
         android:id="@id/editImage"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/profileImageString"
         app:layout_constraintBottom_toTopOf="@id/editUpdateImageButton"
         app:layout_constraintEnd_toEndOf="parent"

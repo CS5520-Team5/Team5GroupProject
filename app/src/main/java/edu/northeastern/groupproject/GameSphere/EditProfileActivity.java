@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String games;
     private String phone;
     private String avatarUri;
+    private String currAvatarUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class EditProfileActivity extends AppCompatActivity {
         age = bundle.getString("age");
         games = bundle.getString("games");
         avatarUri = bundle.getString("avatar");
+        currAvatarUri = avatarUri;
 
         // Initialize default information
         editName.setText(fullname);
@@ -85,25 +88,30 @@ public class EditProfileActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currName = editName.getText().toString();
-                String currEmail = editEmail.getText().toString();
-                String currAge = editAge.getText().toString();
-                String currGames = editGames.getText().toString();
-                databaseReference.child(phone).child("fullname").setValue(currName);
-                databaseReference.child(phone).child("email").setValue(currEmail);
-                databaseReference.child(phone).child("age").setValue(currAge);
-                databaseReference.child(phone).child("games").setValue(currGames);
-                // Update variables
-                fullname = currName;
-                email = currEmail;
-                age = currAge;
-                games = currGames;
-                onBackPressed();
+                if (isUpdated()) {
+                    String currName = editName.getText().toString();
+                    String currEmail = editEmail.getText().toString();
+                    String currAge = editAge.getText().toString();
+                    String currGames = editGames.getText().toString();
+                    databaseReference.child(phone).child("fullname").setValue(currName);
+                    databaseReference.child(phone).child("email").setValue(currEmail);
+                    databaseReference.child(phone).child("age").setValue(currAge);
+                    databaseReference.child(phone).child("games").setValue(currGames);
+                    databaseReference.child(phone).child("avatar").setValue(currAvatarUri);
+                    // Update variables
+                    fullname = currName;
+                    email = currEmail;
+                    age = currAge;
+                    games = currGames;
+                    avatarUri = currAvatarUri;
+                    onBackPressed();
+                } else {
+                    showToast("Please provide updated information");
+                }
             }
         });
 
         // Register onClickListener to update image button
-        // TODO: Implement updating profile image
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +139,8 @@ public class EditProfileActivity extends AppCompatActivity {
         String currAge = editAge.getText().toString();
         String currGames = editGames.getText().toString();
         return !currName.equals(fullname) || !currEmail.equals(email)
-                || !currAge.equals(age) || !currGames.equals(games);
+                || !currAge.equals(age) || !currGames.equals(games)
+                || !currAvatarUri.equals(avatarUri);
     }
 
     // Show a dialog asking the user if they want to terminate the search
@@ -169,9 +178,8 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // Update avatar image URI in user profile
-                avatarUri = uri.toString();
-                setImage(avatarUri);
-                databaseReference.child(phone).child("avatar").setValue(avatarUri);
+                currAvatarUri = uri.toString();
+                setImage(currAvatarUri);
             }
         });
     }
@@ -194,11 +202,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
     // Set and display image from its URI
     private void setImage(String uri) {
-        Glide.with(EditProfileActivity.this)
-                .load(uri)
-                .override(160, 160)
+        RequestOptions options = new RequestOptions()
+                .override(100, 100)
                 .centerCrop()
+                .dontAnimate()
                 .transform(new RoundedCorners(30))
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+        Glide.with(getApplicationContext())
+                .load(uri)
+                .apply(options)
                 .into(editImage);
     }
 }

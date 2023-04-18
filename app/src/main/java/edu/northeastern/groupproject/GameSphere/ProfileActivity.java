@@ -1,11 +1,13 @@
 package edu.northeastern.groupproject.GameSphere;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,7 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import edu.northeastern.groupproject.R;
 
@@ -85,15 +94,10 @@ public class ProfileActivity extends AppCompatActivity {
                             String ageString = "Age: " + age;
                             ageText.setText(ageString);
                             games = snapshot.child("games").getValue(String.class);
-                            String gamesString = "Games: " + games;
+                            String gamesString = "Favorite Games: " + games;
                             gamesText.setText(gamesString);
                             avatarUri = snapshot.child("avatar").getValue(String.class);
-                            Glide.with(ProfileActivity.this)
-                                    .load(avatarUri)
-                                    .override(160, 160)
-                                    .centerCrop()
-                                    .transform(new RoundedCorners(30))
-                                    .into(profileImage);
+                            setImage(avatarUri);
                         }
 
                         @Override
@@ -129,5 +133,33 @@ public class ProfileActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    // Set and display image from its URI
+    private void setImage(String uri) {
+        RequestOptions options = new RequestOptions()
+                .override(100, 100)
+                .centerCrop()
+                .dontAnimate()
+                .transform(new RoundedCorners(30))
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                ;
+        Glide.with(getApplicationContext())
+                .load(uri)
+                .apply(options)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        e.printStackTrace();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(profileImage);
     }
 }
