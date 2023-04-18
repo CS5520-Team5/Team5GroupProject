@@ -29,8 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import edu.northeastern.groupproject.R;
 
@@ -141,22 +139,24 @@ public class ProfileActivity extends AppCompatActivity {
                 .override(100, 100)
                 .centerCrop()
                 .dontAnimate()
-                .transform(new RoundedCorners(30))
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                ;
+                .transform(new RoundedCorners(30));
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round);
         Glide.with(getApplicationContext())
                 .load(uri)
                 .apply(options)
                 .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<Drawable> target, boolean isFirstResource) {
                         e.printStackTrace();
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    public boolean onResourceReady(Drawable resource, Object model,
+                                                   Target<Drawable> target, DataSource dataSource,
+                                                   boolean isFirstResource) {
                         return false;
                     }
                 })

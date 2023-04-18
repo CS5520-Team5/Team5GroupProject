@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -174,12 +178,23 @@ public class EditProfileActivity extends AppCompatActivity {
         StorageReference imageStorageReference = storageReference.child(uri.getLastPathSegment());
         // Upload image
         UploadTask uploadTask = imageStorageReference.putFile(uri);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // Update avatar image URI in user profile
-                currAvatarUri = uri.toString();
-                setImage(currAvatarUri);
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                // Continue with the task to get the download URL
+                return imageStorageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    currAvatarUri = downloadUri.toString();
+                    setImage(currAvatarUri);
+                }
             }
         });
     }
@@ -206,9 +221,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 .override(100, 100)
                 .centerCrop()
                 .dontAnimate()
-                .transform(new RoundedCorners(30))
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
+                .transform(new RoundedCorners(30));
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round);
         Glide.with(getApplicationContext())
                 .load(uri)
                 .apply(options)
