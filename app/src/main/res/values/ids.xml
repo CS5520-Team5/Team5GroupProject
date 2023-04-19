@@ -27,4 +27,24 @@
     <!--    IDs in StickerViewHolder-->
     <item name="image" type="id" />
     <item name="text" type="id" />
+    <!--    IDs in HomeActivity-->
+    <item name="btnNews" type="id" />
+    <item name="btnProfile" type="id" />
+    <!--    IDs in ProfileActivity-->
+    <item name="profileImage" type="id" />
+    <item name="profilePhone" type="id" />
+    <item name="profileName" type="id" />
+    <item name="profileAge" type="id" />
+    <item name="profileEmail" type="id" />
+    <item name="profileGames" type="id" />
+    <item name="editButton" type="id" />
+    <!--    IDs in EditProfileActivity-->
+    <item name="editImage" type="id" />
+    <item name="editName" type="id" />
+    <item name="editAge" type="id" />
+    <item name="editEmail" type="id" />
+    <item name="editGames" type="id" />
+    <item name="editUpdateButton" type="id" />
+    <item name="editUpdateImageButton" type="id" />
+
 </resources>

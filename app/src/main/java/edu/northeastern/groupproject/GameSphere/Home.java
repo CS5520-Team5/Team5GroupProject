@@ -10,7 +10,9 @@ import edu.northeastern.groupproject.R;
 
 public class Home extends AppCompatActivity {
 
-    private Button btnNews,btnRooms;
+    private Button btnNews;
+    private Button btnProfile;
+    private Button btnRooms;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,6 +25,15 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnProfile = findViewById(R.id.btnProfile);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });

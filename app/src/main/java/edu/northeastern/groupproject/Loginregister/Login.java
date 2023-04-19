@@ -50,6 +50,7 @@ public class Login extends AppCompatActivity {
                                     String userName = snapshot.child(phoneTxt).child("fullname").getValue(String.class);
                                     SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
                                     sharedPreferences.edit().putString("name", userName).apply();
+                                    sharedPreferences.edit().putString("phone", phoneTxt).apply();
                                     sharedPreferences.edit().putString("userkey",phoneTxt).apply();
                                     startActivity(new Intent(Login.this, Home.class));
                                     finish();
