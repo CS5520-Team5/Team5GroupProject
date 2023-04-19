@@ -187,6 +187,9 @@ public class MessageActivity extends AppCompatActivity {
         dataRef.child("MessageHistory").push().setValue(hashMap);
         message_input.setText("");
         message_input.clearFocus();
+        for(Member m:memberMap.values()){
+            m.setCount(0);
+        }
     }
     boolean isFirst=true;
     private void initNotification() {
@@ -198,7 +201,7 @@ public class MessageActivity extends AppCompatActivity {
     }
     private long latTime;
     private void noticeMsg(Message m) {
-        if(m.getSender()==sender){
+        if(m.getSender()==memberMap.get(sender).getUsername()){
             return;
         }
         if (latTime>m.getTime()){
