@@ -139,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .override(100, 100)
                 .centerCrop()
                 .dontAnimate()
-                .transform(new RoundedCorners(30));
+                .transform(new RoundedCorners(20));
 //                .placeholder(R.mipmap.ic_launcher_round)
 //                .error(R.mipmap.ic_launcher_round);
         Glide.with(getApplicationContext())
