@@ -4,11 +4,24 @@ public class Member {
     private String key;
     private String username;
     private String image;
+    private Integer count=0;
 
     public Member(String key, String username, String image) {
         this.key = key;
         this.username = username;
         this.image = image;
+    }
+
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+    public void addCount(){
+        this.count=this.count+1;
     }
 
     public String getUsername() {
@@ -41,6 +54,7 @@ public class Member {
                 "key='" + key + '\'' +
                 ", username='" + username + '\'' +
                 ", image='" + image + '\'' +
+                ", count=" + count +
                 '}';
     }
 }

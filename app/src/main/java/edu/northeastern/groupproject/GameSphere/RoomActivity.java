@@ -42,6 +42,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +55,7 @@ import edu.northeastern.groupproject.GameSphere.model.Room;
 import edu.northeastern.groupproject.R;
 
 public class RoomActivity extends AppCompatActivity {
-    public static String currentUser="";
+    public static String currentUser="",currentUserName="";
     private RecyclerView recyclerView;
     private SearchView searchView;
     private ImageView btnAddRoom,addRoomImage;
@@ -71,7 +74,7 @@ public class RoomActivity extends AppCompatActivity {
 
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
         currentUser=sp.getString("userkey","");
-
+        currentUserName=sp.getString("name","");
         dataRef= FirebaseDatabase.getInstance().getReference("Rooms");
         getFullData();
         RoomClickListener roomClickListener=new RoomClickListener() {
@@ -133,19 +136,18 @@ public class RoomActivity extends AppCompatActivity {
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(RoomActivity.this);
 // Set the title and message of the dialog
-            builder.setTitle("You are not a member of this game room");
-            builder.setMessage("Do you want to join?");
+            builder.setTitle(currentUserName+", you are not a member of this game room");
+            builder.setMessage("Do you want to join, "+currentUserName+"?");
 
 // Set the positive button (Yes button) and its click listener
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO: update firebase
                     String roomId=roomList.get(position).getRoomId();
                     List<String> members= roomList.get(position).getMembers();
                     members.add(currentUser);
                     dataRef.child(roomId).child("members").setValue(members);
-                    Toast.makeText(getApplicationContext(), "You are now member of this group", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Congrats! "+currentUserName+",you are now member of this group", Toast.LENGTH_SHORT).show();
                     roomClick(position);
                 }
             });
@@ -236,10 +238,15 @@ public class RoomActivity extends AppCompatActivity {
                 roomList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Room room=createRoomFromData(snapshot);
-//                    Log.v("room",room.toString());
                     roomList.add(room);
-//                    Log.v("roomList",roomList.size()+"rooms");
                 }
+                Comparator<Room> roomComparator = new Comparator<Room>() {
+                    @Override
+                    public int compare(Room r1, Room r2) {
+                        return r2.getMembers().size()-r1.getMembers().size();
+                    }
+                };
+                Collections.sort(roomList,roomComparator);
                 roomAdapter.notifyDataSetChanged();
             }
 
