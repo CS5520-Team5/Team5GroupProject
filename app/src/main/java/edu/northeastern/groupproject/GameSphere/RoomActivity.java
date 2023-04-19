@@ -257,28 +257,43 @@ public class RoomActivity extends AppCompatActivity {
         });
     }
     private void getQueryData(String keyword) {
-        Log.v("get query data","start");
-        Query query = dataRef.orderByChild("roomName").equalTo(keyword);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshots) {
-                roomList.clear();
-                for (DataSnapshot dataSnapshot : dataSnapshots.getChildren()) {
-                    Room room=createRoomFromData(dataSnapshot);
-                    Log.v("room",room.toString());
-                    roomList.add(room);
-                }
-                roomAdapter.notifyDataSetChanged();
-                if(roomList.size()==0){
-                    Toast.makeText(getApplicationContext(), "No data, please search only the exact room name", Toast.LENGTH_SHORT).show();
-                }
-            }
+        keyword=keyword.toLowerCase();
+        ArrayList<Room> tempRoom=new ArrayList<>();
+        for(Room r:roomList){
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle errors
+            if(r.getRoomName().toLowerCase().contains(keyword)
+                    || r.getRoomDescription().toLowerCase().contains(keyword)){
+                tempRoom.add(r);
             }
-        });
+        }
+        roomList=tempRoom;
+        roomAdapter.setRoomList(roomList);
+        roomAdapter.notifyDataSetChanged();
+        if(roomList.size()==0){
+            Toast.makeText(getApplicationContext(), "No data found", Toast.LENGTH_SHORT).show();
+        }
+
+//        Query query = dataRef.orderByChild("roomName").equalTo(keyword);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshots) {
+//                roomList.clear();
+//                for (DataSnapshot dataSnapshot : dataSnapshots.getChildren()) {
+//                    Room room=createRoomFromData(dataSnapshot);
+//                    Log.v("room",room.toString());
+//                    roomList.add(room);
+//                }
+//                roomAdapter.notifyDataSetChanged();
+//                if(roomList.size()==0){
+//                    Toast.makeText(getApplicationContext(), "No data, please search only the exact room name", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Handle errors
+//            }
+//        });
     }
 
     // Create an instance of the ActivityResultLauncher to handle the photo request

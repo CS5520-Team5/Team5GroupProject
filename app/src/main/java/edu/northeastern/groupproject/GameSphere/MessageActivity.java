@@ -80,7 +80,6 @@ public class MessageActivity extends AppCompatActivity {
         dataRef = FirebaseDatabase.getInstance().getReference();
         memberMap=new HashMap<>();
 
-
         // communication
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
         sender=sp.getString("userkey","");
@@ -142,9 +141,10 @@ public class MessageActivity extends AppCompatActivity {
                     }
                 };
                 Collections.sort(memberList,memberComparator);
+                memberAdapter.setMemberList(memberList);
+                memberAdapter.notifyDataSetChanged();
+
                 isFirst=false;
-                memberAdapter=new MemberAdapter(memberList,MessageActivity.this);
-                memberRecyclerView.setAdapter(memberAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

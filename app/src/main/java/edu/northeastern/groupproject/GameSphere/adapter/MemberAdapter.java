@@ -26,6 +26,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHo
         this.context = context;
     }
 
+    public void setMemberList(List<Member> memberList) {
+        this.memberList = memberList;
+    }
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
