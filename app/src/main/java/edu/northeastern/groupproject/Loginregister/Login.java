@@ -51,6 +51,7 @@ public class Login extends AppCompatActivity {
                                     SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
                                     sharedPreferences.edit().putString("name", userName).apply();
                                     sharedPreferences.edit().putString("phone", phoneTxt).apply();
+                                    sharedPreferences.edit().putString("userkey",phoneTxt).apply();
                                     startActivity(new Intent(Login.this, Home.class));
                                     finish();
                                 } else {

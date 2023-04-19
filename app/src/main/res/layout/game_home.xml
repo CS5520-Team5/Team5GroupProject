@@ -10,11 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/newsBtnString"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnProfile" />
+        app:layout_constraintBottom_toTopOf="@id/btnRooms" />
 
     <Button
         android:id="@id/btnProfile"
@@ -23,7 +22,17 @@
         android:text="@string/profileBtnString"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnNews"
+        app:layout_constraintTop_toBottomOf="@id/btnRooms"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/btnRooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Rooms"
+        app:layout_constraintBottom_toTopOf="@id/btnProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnNews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

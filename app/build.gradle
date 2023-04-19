@@ -52,6 +52,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.google.firebase:firebase-auth:21.2.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
     // Add dependency for glide
