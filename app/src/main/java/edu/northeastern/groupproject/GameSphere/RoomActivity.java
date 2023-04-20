@@ -147,7 +147,8 @@ public class RoomActivity extends AppCompatActivity {
                     List<String> members= roomList.get(position).getMembers();
                     members.add(currentUser);
                     dataRef.child(roomId).child("members").setValue(members);
-                    Toast.makeText(getApplicationContext(), "Congrats! "+currentUserName+",you are now member of this group", Toast.LENGTH_SHORT).show();
+                    getFullData();// data changed
+                    Toast.makeText(getApplicationContext(), "Congrats! "+currentUserName+",you are now member of "+roomList.get(position).getRoomName(), Toast.LENGTH_SHORT).show();
                     roomClick(position);
                 }
             });
