@@ -19,5 +19,15 @@
             android:textSize="16sp"
             android:layout_marginStart="8dp"
             android:text="Username" />
+        <TextView
+            android:id="@+id/usercount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_marginStart="8dp"
+            android:text="10"
+            android:paddingHorizontal="5dp"
+            android:textColor="#FFF"
+            android:background="@drawable/roundshape"/>
 
 </LinearLayout>

@@ -29,6 +29,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         this.roomList = roomList;
         this.context = context;
     }
+
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+    }
+
     public void setOnItemClickListener(RoomClickListener roomClickListener) {
         this.roomClickListener = roomClickListener;
     }

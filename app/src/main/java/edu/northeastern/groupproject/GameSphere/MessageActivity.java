@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -77,21 +80,23 @@ public class MessageActivity extends AppCompatActivity {
         dataRef = FirebaseDatabase.getInstance().getReference();
         memberMap=new HashMap<>();
 
-        // Member Recycler View
-        getMemberData();
-        memberRecyclerView=findViewById(R.id.user_list);
-        memberRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        memberAdapter=new MemberAdapter(memberList,this);
-        memberRecyclerView.setAdapter(memberAdapter);
-
         // communication
         SharedPreferences sp=getSharedPreferences("user",MODE_PRIVATE);
         sender=sp.getString("userkey","");
-        // Message Recycler View
+        String sendername=sp.getString("name","");
+        Toast.makeText(getApplicationContext(), "Welcome to the chat! "+sendername, Toast.LENGTH_SHORT).show();
+        // Recycler View
         messageRecyclerView =findViewById(R.id.message_list);
         messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter=new MessageAdapter(messageList,this);
         messageRecyclerView.setAdapter(messageAdapter);
+
+        memberRecyclerView=findViewById(R.id.user_list);
+        memberRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        memberAdapter=new MemberAdapter(memberList,this);
+        memberRecyclerView.setAdapter(memberAdapter);
+        // Get Data
+        getMemberData();
         initNotification();
         // send
         iv_send.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +109,6 @@ public class MessageActivity extends AppCompatActivity {
 
     }
     private void getMessageData(){
-        Log.v("haha","getting message data full");
         Glide.with(this).load(String.valueOf(memberMap.get(sender).getImage())).into(sender_avatar);
         Query query = dataRef.child("MessageHistory").orderByChild("roomId").equalTo(roomId);
         query.addValueEventListener(new ValueEventListener() {
@@ -123,15 +127,24 @@ public class MessageActivity extends AppCompatActivity {
                         String avatar=memberMap.get(sender).getImage();
                         message.setSender(senderName);
                         message.setAvatar(avatar);
+                        memberMap.get(sender).addCount();
                         noticeMsg(message);
                     }
                     messageList.add(message);
                 }
-                Log.v("haha-messagelist",messageList.toString());
-                Log.v("haha-messagelist",messageList.size()+"num");
-                isFirst=false;
                 messageAdapter.notifyDataSetChanged();
+                memberList=new ArrayList<>(memberMap.values());
+                Comparator<Member> memberComparator = new Comparator<Member>() {
+                    @Override
+                    public int compare(Member r1, Member r2) {
+                        return r2.getCount()-r1.getCount();
+                    }
+                };
+                Collections.sort(memberList,memberComparator);
+                memberAdapter.setMemberList(memberList);
+                memberAdapter.notifyDataSetChanged();
 
+                isFirst=false;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -140,27 +153,19 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
     private void getMemberData(){
-        Log.v("haha","getting full member data");
         dataRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshots) {
-                memberList.clear();
                 for(DataSnapshot snapshot:snapshots.getChildren()){
                     String key=snapshot.getKey();
                     if(memberKey.contains(key)){
                         String username=snapshot.child("fullname").getValue(String.class);
                         String avatar=snapshot.child("avatar").getValue(String.class);
                         Member member=new Member(key,username,avatar);
-                        Log.v("haha-member",member.toString());
-                        memberList.add(member);
                         memberMap.put(key,member);
                     }
                 }
-
-                memberAdapter.notifyDataSetChanged();
-                if(messageList.size()==0){
-                    getMessageData();
-                }
+                getMessageData();
             }
 
             @Override
@@ -182,6 +187,9 @@ public class MessageActivity extends AppCompatActivity {
         dataRef.child("MessageHistory").push().setValue(hashMap);
         message_input.setText("");
         message_input.clearFocus();
+        for(Member m:memberMap.values()){
+            m.setCount(0);
+        }
     }
     boolean isFirst=true;
     private void initNotification() {
@@ -193,8 +201,9 @@ public class MessageActivity extends AppCompatActivity {
     }
     private long latTime;
     private void noticeMsg(Message m) {
-        Log.v("haha-latTime",latTime+"");
-        Log.v("haha-isFirst",isFirst+"");
+        if(m.getSender()==memberMap.get(sender).getUsername()){
+            return;
+        }
         if (latTime>m.getTime()){
             return;
         }

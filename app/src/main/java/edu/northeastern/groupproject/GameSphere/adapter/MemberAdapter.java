@@ -26,6 +26,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHo
         this.context = context;
     }
 
+    public void setMemberList(List<Member> memberList) {
+        this.memberList = memberList;
+    }
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,6 +41,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHo
         Member member = memberList.get(position);
         holder.username.setText(String.valueOf(member.getUsername()));
         Glide.with(context).load(String.valueOf(member.getImage())).centerCrop().into(holder.avatar);
+        holder.usercount.setText(String.valueOf(member.getCount()));
     }
 
     @Override
@@ -47,10 +52,12 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.UserViewHo
     public class UserViewHolder extends RecyclerView.ViewHolder {
         private ImageView avatar;
         private TextView username;
+        private TextView usercount;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             avatar=itemView.findViewById(R.id.avatar);
             username=itemView.findViewById(R.id.username);
+            usercount=itemView.findViewById(R.id.usercount);
         }
     }
 }
