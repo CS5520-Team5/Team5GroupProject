@@ -201,14 +201,14 @@ public class MessageActivity extends AppCompatActivity {
     }
     private long latTime;
     private void noticeMsg(Message m) {
-        if(m.getSender()==memberMap.get(sender).getUsername()){
+        if(m.getSender().equals(memberMap.get(sender).getUsername())){
             return;
         }
-        if (latTime>m.getTime()){
+        if (latTime>=m.getTime()){
             return;
         }
         if (isFirst){
-            if (latTime<m.getTime()){
+            if (latTime<=m.getTime()){
                 latTime = m.getTime();
             }
             return;
@@ -221,7 +221,7 @@ public class MessageActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 123, intent, PendingIntent.FLAG_ONE_SHOT);
         }
         Notification notification = new NotificationCompat.Builder(this,"notice")
-                .setContentText("New Message added to chat!")
+                .setContentText("New Message added to chat from "+m.getSender())
                 .setSmallIcon(R.drawable.notifications)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent)
